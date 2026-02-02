@@ -287,6 +287,15 @@ Route::post('ipn/wp5d02/out', [IpnQePayController::class, 'ipnTransfer'])->name(
 Route::post('ipn/watchpay/in', [IpnQePayController::class, 'ipnWatchPayDeposit'])->name('ipn.watchpay.payin');
 Route::post('ipn/watchpay/out', [IpnQePayController::class, 'ipnWatchPayTransfer'])->name('ipn.watchpay.payout');
 
+// Services - serve deposit.php and callback.php through Laravel route
+Route::match(['get', 'post'], 'services/deposit.php', function () {
+    include base_path('services/deposit.php');
+})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
+Route::match(['get', 'post'], 'services/callback.php', function () {
+    include base_path('services/callback.php');
+})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
 
 
 //CronJob
