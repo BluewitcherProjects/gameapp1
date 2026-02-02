@@ -10,9 +10,13 @@ include __DIR__ . '/db.php';
 $merchant_key = "dea314adf60e448e9d52c8ddb632f313";
 $version = "1.0";
 $mch_id = "100666793";
-$base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
-$notify_url = $base_url . "/ipn/watchpay/in";
-$page_url = $base_url . "/deposit";
+// Detect base URL - check for proxy headers too
+$is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+         || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+         || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+$base_url = ($is_https ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+$notify_url = $base_url . "/services/callback.php";
+$page_url = $base_url . "/payment-return.php";
 $order_id = 'WP' . '2026' . time();
 $pay_type = "101";
 $goods_name = "Deposit";
