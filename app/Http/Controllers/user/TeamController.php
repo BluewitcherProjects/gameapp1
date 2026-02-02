@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Http\Controllers\user;
+
+use App\Http\Controllers\Controller;
+use App\Models\Checkin;
+use App\Models\Commission;
+use App\Models\Deposit;
+use App\Models\Improvment;
+use App\Models\LuckyLedger;
+use App\Models\Purchase;
+use App\Models\User;
+use App\Models\UserLedger;
+use App\Models\Withdrawal;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class TeamController extends Controller
+{
+    //
+    public function team(){
+        $user = Auth::user();
+
+        //First Level Users
+        $first_level_users = User::where('ref_by', $user->ref_id)->get();
+        $u1 = User::where('ref_by', $user->ref_id)->paginate(20);
+        $first_level_users_ids = [];
+        foreach ($first_level_users as $user){
+            array_push($first_level_users_ids, $user->id);
+        }
+
+        //Second Level Users
+        $second_level_users_ids = [];
+        foreach ($first_level_users as $element) {
+            $users = User::where('ref_by', $element->ref_id)->get();
+            foreach ($users as $user){
+                array_push($second_level_users_ids, $user->id);
+            }
+        }
+        $second_level_users = User::whereIn('id', $second_level_users_ids)->get();
+        $u2 = User::whereIn('id', $second_level_users_ids)->paginate(20);
+
+        //Third Level Users
+        $third_level_users_ids = [];
+        foreach ($second_level_users as $element) {
+            $users = User::where('ref_by', $element->ref_id)->get();
+            foreach ($users as $user){
+                array_push($third_level_users_ids, $user->id);
+            }
+        }
+        $third_level_users = User::whereIn('id', $third_level_users_ids)->get();
+        $u3 = User::whereIn('id', $third_level_users_ids)->paginate(20);
+        $team_size = $first_level_users->count() + $second_level_users->count() + $third_level_users->count();
+
+        //Get level wise user ids
+        $first_ids = $first_level_users->pluck('id'); //first
+        $second_ids = $second_level_users->pluck('id'); //Second
+        $third_ids = $third_level_users->pluck('id'); //Third
+
+        $lv1Recharge = Deposit::whereIn('user_id', $first_ids)->where('status', 'approved')->sum('amount');
+        $lv2Recharge = Deposit::whereIn('user_id', $second_ids)->where('status', 'approved')->sum('amount');
+        $lv3Recharge = Deposit::whereIn('user_id', $third_ids)->where('status', 'approved')->sum('amount');
+        $lvTotalDeposit = $lv1Recharge + $lv2Recharge + $lv3Recharge;
+
+        $lv1Withdraw = Withdrawal::whereIn('user_id', $first_ids)->where('status', 'approved')->sum('amount');
+        $lv2Withdraw = Withdrawal::whereIn('user_id', $second_ids)->where('status', 'approved')->sum('amount');
+        $lv3Withdraw = Withdrawal::whereIn('user_id', $third_ids)->where('status', 'approved')->sum('amount');
+        $lvTotalWithdraw = $lv1Withdraw + $lv2Withdraw + $lv3Withdraw;
+
+        $activeMembers1 = Deposit::whereIn('user_id', $first_ids)->where('status', 'approved')->groupBy('user_id')->count();
+        $activeMembers2 = Deposit::whereIn('user_id', $second_ids)->where('status', 'approved')->groupBy('user_id')->count();
+        $activeMembers3 = Deposit::whereIn('user_id', $third_ids)->where('status', 'approved')->groupBy('user_id')->count();
+
+        $levelTotalCommission1 = UserLedger::where('user_id', \auth()->id())->where('reason', 'commission')->where('step', 'first')->sum('amount');
+        $levelTotalCommission2 = UserLedger::where('user_id', \auth()->id())->where('reason', 'commission')->where('step', 'second')->sum('amount');
+        $levelTotalCommission3 = UserLedger::where('user_id', \auth()->id())->where('reason', 'commission')->where('step', 'third')->sum('amount');
+
+        return view('app.main.team.index', compact(
+            'first_level_users',
+            'second_level_users',
+            'third_level_users',
+            'team_size',
+            'lvTotalDeposit',
+            'lvTotalWithdraw',
+            'lv1Recharge',
+            'lv2Recharge',
+            'lv3Recharge',
+            'lv1Withdraw',
+            'lv2Withdraw',
+            'lv3Withdraw',
+            'activeMembers1',
+            'activeMembers2',
+            'activeMembers3',
+            'u1',
+            'u2',
+            'u3',
+            'levelTotalCommission1',
+            'levelTotalCommission2',
+            'levelTotalCommission3',
+        ));
+    }
+
+    public function income()
+    {
+        return  view('app.main.income');
+    }
+}

@@ -1,0 +1,413 @@
+/********** popup **********/
+.popup-mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10001;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    filter: opacity(0.5);
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 10002;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90%;
+    overflow-y: auto;
+    border-radius: 10px;
+    background-color: rgba(237, 246, 253, 1);
+    background-size: 100% 100%;
+}
+
+.popup .title {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 10px;
+    height: 40px;
+    line-height: 40px;
+    color: #0fb40f;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.popup .content {
+    padding: 10px;
+}
+
+
+
+
+/********** lang-popup **********/
+
+.lang-popup ul{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+.lang-popup ul li a{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.lang-popup ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: 50%;
+    border-bottom: 1px solid #eee;
+}
+
+.lang-popup ul li a {
+    box-sizing: border-box;
+    padding: 5px;
+    width: 100%;
+    color: #fff;
+}
+
+.lang-popup ul li .icon {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 3px;
+}
+
+
+
+.lang-popup ul li .label {
+    color: #333;
+    line-height: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+
+/********** header **********/
+
+.venom-header{
+    padding:10px 10px;
+    position: fixed;
+    top:0;
+    left: 0;
+    width:100%;
+    z-index:999;
+    background-size: 100% 100%;
+    height: 55px;
+    padding-top: 15px;
+}
+
+.venom-header .header-title{
+    color: #ffffff;
+    font-weight: 1000;
+}
+
+.venom-header .header-top .header-title img{
+    width:100px;
+}
+
+.venom-header .header-top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+}
+
+.venom-header .header-top .header-lang{
+    width:30px;
+}
+
+
+.venom-header .header-top .header-go{
+    /* width:10px; */
+    height: 18px;
+    position: absolute;
+    left: 0;
+}
+
+.venom-header .header-top img{
+    width:100%;
+    height: 100%;
+}
+
+
+.venom-header .header-bottom{
+    text-align: center;
+}
+
+.venom-header .header-bottom img{
+    width:150px;
+}
+
+
+/********** main **********/
+.main{
+    background: white;
+    margin-top: 55px;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 70px;
+    min-height: calc(100vh - 55px);
+}
+
+
+
+/********** bottom **********/
+.bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.bottom ul {
+    display: flex;
+    align-items: center;
+    border-radius: 0px 0px 10px 10px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px -3px 8px  rgba(0, 0, 0, 0.25);
+    padding:5px 0;
+}
+
+.bottom ul li .iconfont{
+    font-size: 30px;
+}
+
+.bottom ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+}
+
+.bottom ul li:nth-child(3) div:nth-child(1) {
+    padding:20px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 50%;
+    transform: translateY(-35%);
+}
+
+
+.bottom ul li a {
+    display: block;
+    color: #888;
+    text-align: center;
+}
+
+.bottom ul li .icon {
+    display: block;
+    margin: 0 auto;
+    width: 25px;
+    height: 25px;
+}
+
+.bottom .grab{
+    position: absolute;
+    left:50%;
+    top:-30px;
+    transform: translateX(-50%);
+
+}
+
+.bottom .grab-hidden img{
+    width:50px;
+    visibility: hidden;
+}
+
+.bottom .grab img{
+    width:80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+}
+
+.bottom ul li.active {
+    color: rgba(0, 0, 0, 1);
+}
+
+.bottom ul li.active a {
+    color:rgba(0, 0, 0, 1);
+    text-align: center;
+}
+
+.bottom ul li.active .icon {
+    fill: #fff;
+}
+
+.bottom ul li .label {
+    font-size: 14px;
+    text-align: center;
+    line-height: 22px;
+}
+
+/********** common **********/
+.m-b-5{
+    margin-bottom: 5px;
+}
+
+
+.m-b-10{
+    margin-bottom: 10px;
+}
+
+
+.m-b-20{
+    margin-bottom: 20px;
+}
+
+.m-b-30{
+    margin-bottom: 30px;
+}
+
+
+.big-button{
+    width:100%;
+    margin: 0 auto;
+    padding:10px 0;
+    color:#ffffff;
+    border-radius: 10px;
+}
+
+
+/********** other **********/
+.empty{
+    text-align: center;
+    padding: 20px 0;
+}
+
+.empty img{
+    width:200px;
+}
+
+
+
+/* share poster */
+
+.poster{
+
+    width:90%;
+    padding:50px 20px 20px;
+
+    position:fixed;
+    top:50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    color:#0fb40f;
+    z-index:9;
+
+    display: none;
+
+
+}
+
+.poster li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+}
+
+
+.poster li > div:nth-child(1){
+    margin-bottom: 5px;
+
+}
+
+.poster .button-poster>div{
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding:10px 0;
+}
+
+.poster li:nth-child(1){
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 1000;
+}
+
+
+.poster li:nth-child(2) img{
+    width:100px;
+    height: 100px;
+
+    border-radius: 50%;
+
+}
+
+.poster .revenue>div:nth-child(2){
+    color:#b7da67;
+    font-size: 16px;
+    font-weight: 1000;
+}
+
+
+
+.poster .share-button{
+    border-radius: 20px;
+    width:80%;
+}
+
+.poster .button-poster{
+    justify-content: center;
+}
+
+
+.float-service{
+    width:35px;
+    position: fixed;
+    top:30%;
+    right:10px;
+    z-index:999;
+}
+
+
+
+.logout-new{
+    width: 20px;
+}
+
+.log-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    right: 0;
+}
+
+.log-header .header-lang{
+    margin-right: 10px;
+}
+
+.button {
+    border-radius: 36px;
+    background: linear-gradient(90deg, rgba(173, 228, 70, 1) 0%, rgba(37, 204, 63, 1) 100%);
+    height: 70px;
+    position: relative;
+    width: 100%;
+    line-height: 70px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+}
+
+
+
+
