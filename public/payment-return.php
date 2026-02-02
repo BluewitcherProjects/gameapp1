@@ -7,14 +7,14 @@ header('Content-Security-Policy: frame-ancestors *');
 <head>
 <script>
 if (window.top !== window.self) {
-    window.top.location.href = '/deposit';
+    window.top.location.href = '/recharge/history';
 } else {
-    window.location.href = '/deposit';
+    window.location.href = '/recharge/history';
 }
 </script>
 </head>
 <body>
 <p>Payment completed. Redirecting...</p>
-<a href="/deposit">Click here if not redirected</a>
+<a href="/recharge/history">Click here if not redirected</a>
 </body>
 </html>
