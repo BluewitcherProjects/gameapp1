@@ -489,4 +489,6 @@
                 currentItem = (currentItem + 1) % items.length;
                 items[currentItem].classList.remove('opacity-0');
             }, 6000); // 6 seconds for better readability
-        } ayout >
+        }
+    </script>
+</x-app-layout>
