@@ -17,6 +17,25 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body card-dashboard">
+                        @if(session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session()->get('success') }}
+                            </div>
+                        @endif
+                        @if(session()->has('error'))
+                            <div class="alert alert-danger">
+                                {{ session()->get('error') }}
+                            </div>
+                        @endif
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="mes">
 
                         </div>
@@ -110,6 +129,7 @@
                                     </tr>
 
                                     <form action="{{route('admin.user.balance.add')}}" method="GET">
+                                        @csrf
                                         <div class="modal fade" id="balanceModal{{$row->id}}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -125,16 +145,14 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label>Amount</label>
-                                                            <input type="number" name="balance" class="form-control"
-                                                                placeholder="Enter amount to add" required>
+                                                            <input type="number" name="balance" class="form-control" placeholder="Enter amount to add" required min="0" step="0.01">
                                                             <input type="hidden" name="user_id" value="{{$row->id}}">
                                                         </div>
                                                     </div>
 
                                                     <!-- Modal footer -->
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Add
-                                                            Balance</button>
+                                                        <button type="submit" class="btn btn-primary">Add Balance</button>
                                                         <button type="button" class="btn btn-danger"
                                                             data-dismiss="modal">Close</button>
                                                     </div>
@@ -277,5 +295,23 @@
                 }
             });
     }
+
+    // Handle balance form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const balanceForms = document.querySelectorAll('form[action="{{route('admin.user.balance.add')}}"]');
+        balanceForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                // Show loading state
+                submitBtn.innerHTML = 'Processing...';
+                submitBtn.disabled = true;
+                
+                // Add visual feedback
+                document.querySelector('.mes').innerHTML = '<div class="alert alert-info">Processing balance addition...</div>';
+            });
+        });
+    });
 </script>
 @endsection
