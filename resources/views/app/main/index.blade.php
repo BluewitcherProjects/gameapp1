@@ -1,10 +1,8 @@
-{{-- Home: slider visible + plans list redesigned --}}
+{{-- Home: slider full-width below nav; plans horizontal layout --}}
 <x-app-layout>
-    <div class="space-y-4 md:space-y-8" x-data="{ activeTab: 'normal' }">
-
-        <!-- Hero Section / Carousel -->
-        <div
-            class="relative bg-primary-midnight pb-6 md:pb-12 rounded-b-[3rem] shadow-2xl border-b border-white/5 overflow-hidden">
+    <div class="w-full block min-h-screen pb-20" x-data="{ activeTab: 'normal' }">
+        <!-- Hero Section / Carousel - full width, below any header, above bottom nav -->
+        <section class="w-full block relative bg-primary-midnight pb-6 md:pb-12 rounded-b-[3rem] shadow-2xl border-b border-white/5 overflow-hidden">
             <!-- Abstract Background Elements -->
             <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div
@@ -15,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10">
+            <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10">
                 <!-- Carousel -->
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
                     <div class="carousel relative w-full h-64 sm:h-80 md:h-96">
@@ -113,10 +111,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Investment Plans Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
 
             <div class="flex flex-col items-center mb-6 md:mb-10">
                 <h2
@@ -149,48 +147,48 @@
                 </div>
             </div>
 
-            <!-- Plans List (redesigned) -->
-            <div class="space-y-6 pb-6">
+            <!-- Plans List: horizontal layout, one row per plan -->
+            <div class="space-y-4">
                 <!-- Normal Plans -->
                 <div x-show="activeTab === 'normal'" x-transition:enter="transition ease-out duration-500"
                     x-transition:enter-start="opacity-0 transform translate-y-4"
-                    x-transition:enter-end="opacity-100 transform translate-y-0" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-4">
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
-                    <div class="relative group">
-                        <div class="relative bg-[#0f172a]/90 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-accent-cyan/40 hover:shadow-lg hover:shadow-accent-cyan/10 transition-all duration-300 flex flex-col min-h-[200px]">
-                            <div class="h-1 w-full bg-gradient-to-r from-accent-cyan to-primary-teal"></div>
-                            <div class="p-5 flex-1 flex flex-col sm:flex-row gap-4">
-                                <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center overflow-hidden">
-                                    <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                    <div class="relative group w-full">
+                        <div class="relative flex flex-wrap items-center w-full gap-3 sm:gap-6 p-4 sm:p-5 rounded-2xl bg-[#0f172a]/90 backdrop-blur-sm border border-white/10 hover:border-accent-cyan/40 hover:shadow-lg hover:shadow-accent-cyan/10 transition-all duration-300">
+                            <div class="h-1 absolute top-0 left-0 right-0 rounded-t-2xl bg-gradient-to-r from-accent-cyan to-primary-teal"></div>
+                            <!-- Image -->
+                            <div class="flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center overflow-hidden">
+                                <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            </div>
+                            <!-- Name + validity -->
+                            <div class="flex-shrink-0 min-w-0 flex flex-col justify-center order-first sm:order-none flex-1 sm:flex-initial">
+                                <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
+                                <span class="inline-flex items-center w-fit mt-0.5 px-2 py-0.5 rounded-md bg-accent-cyan/15 text-accent-cyan text-xs font-semibold border border-accent-cyan/20">{{ $element->validity }} Days</span>
+                            </div>
+                            <!-- Stats: Invest | Daily | Total - horizontal -->
+                            <div class="flex flex-row items-center justify-center sm:justify-start gap-2 sm:gap-4 flex-1 w-full sm:w-auto min-w-0 basis-full sm:basis-auto">
+                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Invest</span>
+                                    <span class="text-white font-bold text-xs sm:text-sm">₹{{ number_format($element->price, 0) }}</span>
                                 </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex flex-wrap items-center gap-2 mb-2">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg bg-accent-cyan/15 text-accent-cyan text-xs font-semibold border border-accent-cyan/20">{{ $element->validity }} Days</span>
-                                        <h3 class="text-white font-bold text-lg truncate">{{ $element->name }}</h3>
-                                    </div>
-                                    <div class="grid grid-cols-3 gap-3 mt-3">
-                                        <div class="rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-center">
-                                            <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Invest</p>
-                                            <p class="text-white font-bold text-sm">₹{{ number_format($element->price, 0) }}</p>
-                                        </div>
-                                        <div class="rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-center">
-                                            <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Daily</p>
-                                            <p class="text-accent-cyan font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
-                                        </div>
-                                        <div class="rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-center">
-                                            <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Total</p>
-                                            <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
-                                        </div>
-                                    </div>
+                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Daily</span>
+                                    <span class="text-accent-cyan font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</span>
+                                </div>
+                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Total</span>
+                                    <span class="text-accent-gold font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</span>
                                 </div>
                             </div>
-                            <div class="px-5 pb-5 pt-0">
+                            <!-- CTA -->
+                            <div class="flex-shrink-0 w-full sm:w-auto sm:min-w-[130px]">
                                 @if($element->presale == 'yes')
-                                <button disabled class="w-full py-3 rounded-xl bg-white/5 text-gray-500 font-bold text-sm tracking-wide border border-white/5 cursor-not-allowed">
-                                    Pre-Sale Active
+                                <button disabled class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-white/5 text-gray-500 font-bold text-xs sm:text-sm tracking-wide border border-white/5 cursor-not-allowed">
+                                    Pre-Sale
                                 </button>
                                 @else
-                                <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white font-bold text-sm tracking-wide shadow-lg shadow-accent-cyan/20 border border-accent-cyan/20 hover:shadow-accent-cyan/30 hover:opacity-95 transition-all duration-300">
+                                <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-accent-cyan/20 border border-accent-cyan/20 hover:shadow-accent-cyan/30 hover:opacity-95 transition-all duration-300">
                                     Invest Now
                                 </button>
                                 @endif
@@ -204,43 +202,39 @@
                 <div x-show="activeTab === 'welfare'" style="display: none;"
                     x-transition:enter="transition ease-out duration-500"
                     x-transition:enter-start="opacity-0 transform translate-y-4"
-                    x-transition:enter-end="opacity-100 transform translate-y-0" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-4">
                 @foreach(\App\Models\Package::where('type','welfare')->get() as $element)
-                    <div class="relative group">
-                        <div class="relative bg-[#0f172a]/90 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-accent-gold/40 hover:shadow-lg hover:shadow-accent-gold/10 transition-all duration-300 flex flex-col min-h-[200px]">
-                            <div class="h-1 w-full bg-gradient-to-r from-accent-gold to-orange-600"></div>
-                            <div class="p-5 flex-1 flex flex-col sm:flex-row gap-4">
-                                <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center overflow-hidden">
-                                    <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                    <div class="relative group w-full">
+                        <div class="relative flex flex-wrap items-center w-full gap-3 sm:gap-6 p-4 sm:p-5 rounded-2xl bg-[#0f172a]/90 backdrop-blur-sm border border-white/10 hover:border-accent-gold/40 hover:shadow-lg hover:shadow-accent-gold/10 transition-all duration-300">
+                            <div class="h-1 absolute top-0 left-0 right-0 rounded-t-2xl bg-gradient-to-r from-accent-gold to-orange-600"></div>
+                            <div class="flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center overflow-hidden">
+                                <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            </div>
+                            <div class="flex-shrink-0 min-w-0 flex flex-col justify-center order-first sm:order-none flex-1 sm:flex-initial">
+                                <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
+                                <span class="inline-flex items-center w-fit mt-0.5 px-2 py-0.5 rounded-md bg-accent-gold/15 text-accent-gold text-xs font-semibold border border-accent-gold/20">{{ $element->validity }} Days</span>
+                            </div>
+                            <div class="flex flex-row items-center justify-center sm:justify-start gap-2 sm:gap-4 flex-1 w-full sm:w-auto min-w-0 basis-full sm:basis-auto">
+                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Invest</span>
+                                    <span class="text-white font-bold text-xs sm:text-sm">₹{{ number_format($element->price, 0) }}</span>
                                 </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex flex-wrap items-center gap-2 mb-2">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg bg-accent-gold/15 text-accent-gold text-xs font-semibold border border-accent-gold/20">{{ $element->validity }} Days</span>
-                                        <h3 class="text-white font-bold text-lg truncate">{{ $element->name }}</h3>
-                                    </div>
-                                    <div class="grid grid-cols-3 gap-3 mt-3">
-                                        <div class="rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-center">
-                                            <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Invest</p>
-                                            <p class="text-white font-bold text-sm">₹{{ number_format($element->price, 0) }}</p>
-                                        </div>
-                                        <div class="rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-center">
-                                            <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Daily</p>
-                                            <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
-                                        </div>
-                                        <div class="rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-center">
-                                            <p class="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Total</p>
-                                            <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
-                                        </div>
-                                    </div>
+                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Daily</span>
+                                    <span class="text-accent-gold font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</span>
+                                </div>
+                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Total</span>
+                                    <span class="text-accent-gold font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</span>
                                 </div>
                             </div>
-                            <div class="px-5 pb-5 pt-0">
+                            <div class="flex-shrink-0 w-full sm:w-auto sm:min-w-[130px]">
                                 @if($element->presale == 'yes')
-                                <button disabled class="w-full py-3 rounded-xl bg-white/5 text-gray-500 font-bold text-sm tracking-wide border border-white/5 cursor-not-allowed">
-                                    Pre-Sale Active
+                                <button disabled class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-white/5 text-gray-500 font-bold text-xs sm:text-sm tracking-wide border border-white/5 cursor-not-allowed">
+                                    Pre-Sale
                                 </button>
                                 @else
-                                <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-accent-gold/20 border border-accent-gold/20 hover:shadow-accent-gold/30 hover:opacity-95 transition-all duration-300">
+                                <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-accent-gold/20 border border-accent-gold/20 hover:shadow-accent-gold/30 hover:opacity-95 transition-all duration-300">
                                     Invest Now
                                 </button>
                                 @endif
@@ -250,7 +244,6 @@
                 @endforeach
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- Purchase Confirmation Modal -->
