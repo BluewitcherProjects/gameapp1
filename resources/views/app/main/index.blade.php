@@ -130,7 +130,7 @@
                         class="px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ml-1 relative">
                         OFFER
                         <span
-                            class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse border border-white/20">HOT</span>
+                            class="absolute -top-3 -right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse border border-white/20 shadow-lg shadow-red-600/50 z-50">HOT</span>
                     </button>
                 </div>
             </div>
