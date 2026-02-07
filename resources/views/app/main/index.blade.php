@@ -148,71 +148,62 @@
                     x-transition:enter-start="opacity-0 transform translate-y-4"
                     x-transition:enter-end="opacity-100 transform translate-y-0" class="relative group">
 
-                    <!-- Glow Effect -->
                     <div
-                        class="absolute -inset-0.5 bg-gradient-to-br from-accent-cyan via-primary-teal to-accent-cyan rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
-                    </div>
-
-                    <!-- Card Container (Horizontal Layout) -->
-                    <div
-                        class="relative bg-gradient-to-br from-primary-midnight to-primary-midnight/95 rounded-2xl border border-accent-cyan/20 overflow-hidden hover:border-accent-cyan/40 transition-all duration-300 h-full flex flex-col shadow-xl">
+                        class="relative bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-2xl border border-white/10 overflow-hidden hover:border-accent-cyan/50 transition-all duration-300 h-full flex flex-col shadow-xl group-hover:shadow-accent-cyan/20">
 
                         <div class="flex flex-row h-full">
                             <!-- Left Side: Image (35%) -->
-                            <div class="w-[35%] relative overflow-hidden border-r border-white/5">
+                            <div
+                                class="w-[35%] relative bg-gradient-to-b from-gray-900 to-gray-800 border-r border-white/5 p-2 flex items-center justify-center group-hover:bg-gray-800/80 transition-colors duration-300">
                                 <img src="{{ asset($element->photo) }}"
-                                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary-midnight/60 to-transparent">
-                                </div>
-
-                                <!-- Validity Badge (Top Left) -->
+                                    class="w-full h-full object-contain drop-shadow-2xl transform group-hover:scale-110 transition-transform duration-500">
                                 <div
-                                    class="absolute top-0 left-0 bg-[#005f73] text-white text-[10px] font-bold px-2 py-1 rounded-br-lg shadow-md border-r border-b border-white/10">
+                                    class="absolute top-0 left-0 bg-gradient-to-r from-accent-cyan to-[#005f73] text-white text-[10px] font-bold px-2.5 py-1 rounded-br-lg shadow-lg z-10 tracking-wide">
                                     {{ $element->validity }} Days
                                 </div>
                             </div>
 
                             <!-- Right Side: Details (65%) -->
-                            <div class="w-[65%] p-3 flex flex-col justify-between">
+                            <div class="w-[65%] p-3.5 flex flex-col justify-between">
                                 <div>
-                                    <!-- Plan Name -->
-                                    <h3 class="text-white font-bold text-sm mb-2 truncate">{{ $element->name ?? 'Premium
-                                        Plan' }}</h3>
+                                    <h3 class="text-white font-bold text-sm mb-3 truncate tracking-wide leading-snug">{{
+                                        $element->name }}</h3>
 
-                                    <!-- Stats List -->
-                                    <div class="space-y-1.5">
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-metallic-silver">Price</span>
-                                            <span class="text-white font-bold">₹{{ number_format($element->price, 2)
-                                                }}</span>
+                                    <div class="space-y-2">
+                                        <div
+                                            class="flex justify-between items-center text-xs pb-1.5 border-b border-white/5">
+                                            <span class="text-gray-400 font-medium">Invest</span>
+                                            <span class="text-white font-bold text-sm">₹{{
+                                                number_format($element->price, 0) }}</span>
                                         </div>
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-metallic-silver">Daily Inc.</span>
-                                            <span class="text-white font-bold">₹{{
+                                        <div
+                                            class="flex justify-between items-center text-xs pb-1.5 border-b border-white/5">
+                                            <span class="text-gray-400 font-medium">Daily</span>
+                                            <span class="text-accent-cyan font-bold text-sm">₹{{
                                                 number_format($element->commission_with_avg_amount / $element->validity,
                                                 2) }}</span>
                                         </div>
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-metallic-silver">Total Gain</span>
-                                            <span class="text-accent-gold font-bold">₹{{
-                                                number_format($element->commission_with_avg_amount, 2) }}</span>
+                                        <div class="flex justify-between items-center text-xs pt-0.5">
+                                            <span class="text-gray-400 font-medium">Total</span>
+                                            <span class="text-accent-gold font-bold text-sm">₹{{
+                                                number_format($element->commission_with_avg_amount, 0) }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Full Width Button at Bottom -->
+                        <!-- Button -->
                         <div class="p-3 pt-0 mt-auto">
                             @if($element->presale == 'yes')
                             <button disabled
-                                class="w-full py-2.5 rounded-xl bg-gray-700/50 text-gray-400 font-bold text-sm tracking-wide uppercase border border-white/5 cursor-not-allowed">
+                                class="w-full py-2.5 rounded-xl bg-white/5 text-gray-500 font-bold text-xs tracking-widest uppercase border border-white/5 cursor-not-allowed">
                                 Pre-Sale Active
                             </button>
                             @else
                             <button @click="openPurchaseModal({{$element->id}})"
-                                class="w-full py-2.5 rounded-xl bg-gradient-to-r from-accent-cyan to-[#005f73] text-white font-bold text-sm tracking-wide shadow-lg shadow-accent-cyan/20 border border-white/10 hover:shadow-accent-cyan/40 hover:scale-[1.02] transition-all duration-300">
-                                Buy Now
+                                class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white font-bold text-xs tracking-widest uppercase shadow-lg shadow-accent-cyan/20 border border-white/10 hover:shadow-accent-cyan/40 hover:scale-[1.02] transition-all duration-300">
+                                Invest Now
                             </button>
                             @endif
                         </div>
@@ -227,71 +218,62 @@
                     x-transition:enter-start="opacity-0 transform translate-y-4"
                     x-transition:enter-end="opacity-100 transform translate-y-0" class="relative group">
 
-                    <!-- Glow Effect -->
                     <div
-                        class="absolute -inset-0.5 bg-gradient-to-br from-accent-gold via-orange-600 to-accent-gold rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
-                    </div>
-
-                    <!-- Card Container (Horizontal Layout) -->
-                    <div
-                        class="relative bg-gradient-to-br from-primary-midnight to-primary-midnight/95 rounded-2xl border border-accent-gold/20 overflow-hidden hover:border-accent-gold/40 transition-all duration-300 h-full flex flex-col shadow-xl">
+                        class="relative bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-2xl border border-white/10 overflow-hidden hover:border-accent-gold/50 transition-all duration-300 h-full flex flex-col shadow-xl group-hover:shadow-accent-gold/20">
 
                         <div class="flex flex-row h-full">
                             <!-- Left Side: Image (35%) -->
-                            <div class="w-[35%] relative overflow-hidden border-r border-white/5">
+                            <div
+                                class="w-[35%] relative bg-gradient-to-b from-gray-900 to-gray-800 border-r border-white/5 p-2 flex items-center justify-center group-hover:bg-gray-800/80 transition-colors duration-300">
                                 <img src="{{ asset($element->photo) }}"
-                                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary-midnight/60 to-transparent">
-                                </div>
-
-                                <!-- Validity Badge (Top Left) -->
+                                    class="w-full h-full object-contain drop-shadow-2xl transform group-hover:scale-110 transition-transform duration-500">
                                 <div
-                                    class="absolute top-0 left-0 bg-[#005f73] text-white text-[10px] font-bold px-2 py-1 rounded-br-lg shadow-md border-r border-b border-white/10">
+                                    class="absolute top-0 left-0 bg-gradient-to-r from-accent-gold to-orange-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-br-lg shadow-lg z-10 tracking-wide">
                                     {{ $element->validity }} Days
                                 </div>
                             </div>
 
                             <!-- Right Side: Details (65%) -->
-                            <div class="w-[65%] p-3 flex flex-col justify-between">
+                            <div class="w-[65%] p-3.5 flex flex-col justify-between">
                                 <div>
-                                    <!-- Plan Name -->
-                                    <h3 class="text-white font-bold text-sm mb-2 truncate">{{ $element->name ?? 'Welfare
-                                        Plan' }}</h3>
+                                    <h3 class="text-white font-bold text-sm mb-3 truncate tracking-wide leading-snug">{{
+                                        $element->name }}</h3>
 
-                                    <!-- Stats List -->
-                                    <div class="space-y-1.5">
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-metallic-silver">Price</span>
-                                            <span class="text-white font-bold">₹{{ number_format($element->price, 2)
-                                                }}</span>
+                                    <div class="space-y-2">
+                                        <div
+                                            class="flex justify-between items-center text-xs pb-1.5 border-b border-white/5">
+                                            <span class="text-gray-400 font-medium">Invest</span>
+                                            <span class="text-white font-bold text-sm">₹{{
+                                                number_format($element->price, 0) }}</span>
                                         </div>
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-metallic-silver">Daily Inc.</span>
-                                            <span class="text-white font-bold">₹{{
+                                        <div
+                                            class="flex justify-between items-center text-xs pb-1.5 border-b border-white/5">
+                                            <span class="text-gray-400 font-medium">Daily</span>
+                                            <span class="text-accent-gold font-bold text-sm">₹{{
                                                 number_format($element->commission_with_avg_amount / $element->validity,
                                                 2) }}</span>
                                         </div>
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-metallic-silver">Total Gain</span>
-                                            <span class="text-accent-gold font-bold">₹{{
-                                                number_format($element->commission_with_avg_amount, 2) }}</span>
+                                        <div class="flex justify-between items-center text-xs pt-0.5">
+                                            <span class="text-gray-400 font-medium">Total</span>
+                                            <span class="text-accent-gold font-bold text-sm">₹{{
+                                                number_format($element->commission_with_avg_amount, 0) }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Full Width Button at Bottom -->
+                        <!-- Button -->
                         <div class="p-3 pt-0 mt-auto">
                             @if($element->presale == 'yes')
                             <button disabled
-                                class="w-full py-2.5 rounded-xl bg-gray-700/50 text-gray-400 font-bold text-sm tracking-wide uppercase border border-white/5 cursor-not-allowed">
+                                class="w-full py-2.5 rounded-xl bg-white/5 text-gray-500 font-bold text-xs tracking-widest uppercase border border-white/5 cursor-not-allowed">
                                 Pre-Sale Active
                             </button>
                             @else
                             <button @click="openPurchaseModal({{$element->id}})"
-                                class="w-full py-2.5 rounded-xl bg-gradient-to-r from-accent-gold to-[#ca8a04] text-white font-bold text-sm tracking-wide shadow-lg shadow-accent-gold/20 border border-white/10 hover:shadow-accent-gold/40 hover:scale-[1.02] transition-all duration-300">
-                                Buy Now
+                                class="w-full py-2.5 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white font-bold text-xs tracking-widest uppercase shadow-lg shadow-accent-gold/20 border border-white/10 hover:shadow-accent-gold/40 hover:scale-[1.02] transition-all duration-300">
+                                Invest Now
                             </button>
                             @endif
                         </div>
@@ -407,3 +389,48 @@
                         </li>
                         <li class="flex items-center">
                             <span
+                                class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mr-3 text-xs">✓</span>
+                            <span>Level 1 Commission: <strong class="text-accent-gold">20%</strong></span>
+                        </li>
+                    </ul>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER" target="_blank"
+                            class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-lg shadow-blue-500/20 px-6 py-3.5 bg-[#229ED9] text-sm font-bold text-white hover:bg-[#1e8dbf] focus:outline-none transition-all duration-300">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+                            </svg>
+                            Join Telegram
+                        </a>
+                        <button type="button" @click="show = false"
+                            class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-lg shadow-accent-gold/20 px-6 py-3.5 bg-gradient-to-r from-accent-gold to-orange-500 text-sm font-bold text-white hover:shadow-accent-gold/40 focus:outline-none transition-all duration-300">
+                            Get Started Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <script>
+     addEventListener(', () => {
+            window.openPurchaseModal = function (id) {
+                window.dispatchEvent(new CustomEvent('open-purchase-modal', { detail: { cid: id } }));
+            }
+        });
+
+        // Enhanced Slider Logic
+        const items = document.querySelectorAll('.carousel-item');
+        let currentItem = 0;
+        if (items.length > 0) {
+            items[0].classList.remove('opacity-0');
+            setInterval(() => {
+                items[currentItem].classList.add('opacity-0');
+                currentItem = (currentItem + 1) % items.length;
+                items[currentItem].classList.remove('opacity-0');
+            }, 3000);
+        }
+    </script>
+</x-app-layout>
