@@ -1,53 +1,79 @@
 <x-guest-layout>
     <div x-data="loginForm()" class="w-full">
-        <!-- Logo/Header -->
-        <div class="text-center mb-10">
-            <div
-                class="inline-flex justify-center items-center w-20 h-20 rounded-full bg-linear-to-br from-accent-gold/20 to-transparent border border-accent-gold/30 mb-6 ring-4 ring-accent-gold/5 shadow-[0_0_30px_rgba(251,191,36,0.2)]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-accent-gold drop-shadow-md" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                </svg>
-            </div>
-            <h2
-                class="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-accent-gold via-white to-accent-gold tracking-tight mb-2 drop-shadow-sm">
-                Welcome Back</h2>
-            <p class="text-metallic-silver text-sm font-medium tracking-wide">Enter your details to access your
-                portfolio</p>
-        </div>
+        <!-- Premium Header/Banner -->
+        <div
+            class="relative h-32 -mt-6 -mx-6 mb-8 bg-hero-gradient overflow-hidden rounded-t-xl flex items-center justify-center">
+            <div class="absolute inset-0 bg-primary-midnight/60 backdrop-blur-xs"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-primary-midnight via-transparent to-transparent"></div>
 
-        <form @submit.prevent="submitForm">
-            <!-- Mobile Number -->
-            <div class="mb-6 relative group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-metallic-silver group-focus-within:text-accent-cyan transition-colors duration-300"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 left-0 w-full h-full opacity-30">
+                <div
+                    class="absolute right-0 top-0 w-32 h-32 bg-accent-gold/20 blur-3xl rounded-full translate-x-10 -translate-y-10">
+                </div>
+                <div
+                    class="absolute left-0 bottom-0 w-24 h-24 bg-accent-cyan/20 blur-2xl rounded-full -translate-x-5 translate-y-5">
+                </div>
+            </div>
+
+            <!-- Logo & Title -->
+            <div class="relative z-10 text-center flex flex-col items-center">
+                <div
+                    class="w-12 h-12 mb-2 rounded-full bg-linear-to-br from-accent-gold to-orange-500 flex items-center justify-center shadow-lg shadow-accent-gold/30 border-2 border-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white drop-shadow-md" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                     </svg>
                 </div>
-                <input type="text" x-model="formData.phone"
-                    class="block w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-metallic-silver/50 focus:outline-hidden focus:ring-2 focus:ring-accent-cyan/50 focus:border-accent-cyan/50 transition-all duration-300 sm:text-sm shadow-inner"
-                    placeholder="Mobile Number" required>
+                <h2 class="text-2xl font-bold text-white tracking-wide drop-shadow-md font-heading">Welcome Back</h2>
+                <p class="text-metallic-silver text-xs font-medium tracking-wider uppercase mt-1">Access Your Portfolio
+                </p>
+            </div>
+        </div>
+
+        <form @submit.prevent="submitForm" class="space-y-5 px-2">
+            <!-- Mobile Number -->
+            <div class="relative group">
+                <label class="block text-xs font-medium text-metallic-silver mb-1.5 ml-1">Mobile Number</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-metallic-silver group-focus-within:text-accent-cyan transition-colors duration-300"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                    </div>
+                    <input type="text" x-model="formData.phone"
+                        class="block w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-metallic-silver/30 focus:outline-hidden focus:ring-2 focus:ring-accent-cyan/50 focus:border-accent-cyan/50 transition-all duration-300 sm:text-sm shadow-inner"
+                        placeholder="Enter your mobile number" required>
+                </div>
             </div>
 
             <!-- Password -->
-            <div class="mb-4 relative group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-metallic-silver group-focus-within:text-accent-gold transition-colors duration-300"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
+            <div class="relative group">
+                <label class="block text-xs font-medium text-metallic-silver mb-1.5 ml-1">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-metallic-silver group-focus-within:text-accent-gold transition-colors duration-300"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <input type="password" x-model="formData.password"
+                        class="block w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-metallic-silver/30 focus:outline-hidden focus:ring-2 focus:ring-accent-gold/50 focus:border-accent-gold/50 transition-all duration-300 sm:text-sm shadow-inner"
+                        placeholder="Enter your password" required>
                 </div>
-                <input type="password" x-model="formData.password"
-                    class="block w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-metallic-silver/50 focus:outline-hidden focus:ring-2 focus:ring-accent-gold/50 focus:border-accent-gold/50 transition-all duration-300 sm:text-sm shadow-inner"
-                    placeholder="Password" required>
             </div>
 
-            <!-- Forgot Password -->
-            <div class="flex items-center justify-end mb-8">
+            <!-- Actions -->
+            <div class="flex items-center justify-between mt-2 mb-6">
+                <label class="flex items-center">
+                    <input type="checkbox"
+                        class="rounded bg-white/10 border-transparent focus:border-transparent focus:bg-white/10 text-accent-gold focus:ring-1 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-accent-gold/50 transition-colors duration-200">
+                    <span class="ml-2 text-xs text-metallic-silver">Remember me</span>
+                </label>
                 <a href="{{ url('forgot-password') }}"
                     class="text-xs font-medium text-accent-cyan hover:text-white transition-colors duration-200">
                     Forgot Password?
@@ -161,24 +187,19 @@
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify(this.formData)
-                    })
-                        .then(response => response.json())
-                        .then(data => {
+                        body: JSON.stringify(this.formDat                           })
+                        .then                        e.json())
+                                  data => {
+                                        ding = false;
+                                              s === true) {
+                                window.dispatchEvent(new CustomEvent('notify', { detail: { message: data.message |                                 'success' } }));
+                                     etTimeout(() => {
+                                                               "{{ url('d                                                                                             } else {
+                                window.dispatchEvent(new CustomEvent('notify', { detail:                             |                        pe:                                                                              })
+                                       r => {
                             this.loading = false;
-                            if (data.status === true) {
-                                window.dispatchEvent(new CustomEvent('notify', { detail: { message: data.message || 'Login Successful!', type: 'success' } }));
-                                setTimeout(() => {
-                                    window.location.href = "{{ url('dashboard') }}";
-                                }, 1500);
-                            } else {
-                                window.dispatchEvent(new CustomEvent('notify', { detail: { message: data.message || 'Login failed', type: 'error' } }));
-                            }
-                        })
-                        .catch(error => {
-                            this.loading = false;
-                            window.dispatchEvent(new CustomEvent('notify', { detail: { message: 'An error occurred. Please try again.', type: 'error' } }));
-                            console.error('Error:', error);
+                            window.dispatchEvent(new CustomEvent('notify                            'An error occurred. Please try a                        ' } }));
+                            console.e(
                         });
                 }
             }

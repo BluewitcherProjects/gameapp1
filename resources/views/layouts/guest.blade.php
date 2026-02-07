@@ -19,11 +19,7 @@
 <body class="font-sans text-metallic-platinum antialiased">
     <div
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-hero-gradient selection:bg-accent-cyan selection:text-primary-dark">
-        <div>
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-accent-gold" />
-            </a>
-        </div>
+        <!-- Logo Removed/Handled by Page Content -->
 
         <div
             class="w-full sm:max-w-md mt-6 px-6 py-4 bg-primary-midnight/40 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden sm:rounded-xl">

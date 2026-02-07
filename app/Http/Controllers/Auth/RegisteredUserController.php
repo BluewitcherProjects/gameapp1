@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
      */
     public function create(Request $request)
     {
-        $captcha_code = rand(00000,99999);
+        $captcha_code = rand(00000, 99999);
         $ref_by = $request->query('inviteCode');
         return view('app.auth.registration', compact('ref_by', 'captcha_code'));
     }
@@ -48,35 +48,30 @@ class RegisteredUserController extends Controller
             'password' => ['required'],
             'confirm_password' => ['required'],
             'withdraw_password' => ['required'],
-            ]);
-        if ($validate->fails()){
+        ]);
+        if ($validate->fails()) {
             $user = User::where('phone', $request->phone)->first();
-            if ($user){
-                return redirect()->back()->with('message', 'Enter correct info');
+            if ($user) {
+                return response()->json(['status' => false, 'message' => 'Account already exists']);
             }
-            return redirect()->back()->with('message', $validate->errors());
+            return response()->json(['status' => false, 'message' => $validate->errors()->first()]);
         }
 
-        if ($request->phone == ''){
-            return redirect()->back()->with('message', 'Enter phone number');
+        if ($request->phone == '') {
+            return response()->json(['status' => false, 'message' => 'Enter phone number']);
         }
 
-        if ($request->confirm_password != $request->password){
-            return redirect()->back()->with('message', 'Confirm password not match');
+        if ($request->confirm_password != $request->password) {
+            return response()->json(['status' => false, 'message' => 'Confirm password does not match']);
         }
 
         $getIp = \Request::ip();
-        /*
-        $checkUserIp = DB::table('users')->where('ip', $getIp)->exists();
-        if ($checkUserIp){
-            return back()->with('message', 'Have an account your device.');
-        }
-*/
-        if ($request->ref_by){
+
+        if ($request->ref_by) {
             $getUser = User::where('ref_id', $request->ref_by)->first();
-            if ($getUser){
+            if ($getUser) {
                 $first_level_users = User::where('ref_by', $getUser->ref_id)->count();
-                if ($first_level_users <= setting('total_member_register_reword')){
+                if ($first_level_users <= setting('total_member_register_reword')) {
                     $getUser->balance = $getUser->balance + setting('total_member_register_reword_amount');
                     $getUser->save();
                 }
@@ -85,11 +80,11 @@ class RegisteredUserController extends Controller
 
         //Check refer code is next time edit
         $user = User::create([
-            'name' => 'User'.rand(22,99),
-            'username' => 'uname'.$request->phone,
-            'ref_id' => $this->ref_code().$this->ref_code(),
-            'ref_by' => $request->ref_by ?? $this->ref_code().$this->ref_code(),
-            'email' => 'user'.rand(11111,99999).time().'@gmail.com',
+            'name' => 'User' . rand(22, 99),
+            'username' => 'uname' . $request->phone,
+            'ref_id' => $this->ref_code() . $this->ref_code(),
+            'ref_by' => $request->ref_by ?? $this->ref_code() . $this->ref_code(),
+            'email' => 'user' . rand(11111, 99999) . time() . '@gmail.com',
             'password' => Hash::make($request->password),
             'withdraw_password' => $request->withdraw_password,
             'type' => 'user',
@@ -100,29 +95,31 @@ class RegisteredUserController extends Controller
             'remember_token' => Str::random(30),
         ]);
 
-        if ($user){
+        if ($user) {
             Auth::login($user);
-            return redirect()->route('dashboard')->with('message', 'Successful');
-        }else{
-            return redirect()->back()->with('message', 'Registered failed');
+            return response()->json(['status' => true, 'message' => 'Registration Successful']);
+        }
+        else {
+            return response()->json(['status' => false, 'message' => 'Registration failed']);
         }
     }
 
     public function ref_code()
     {
-        $str1 = rand(0,99);
-        $rand = rand(000,999);
+        $str1 = rand(0, 99);
+        $rand = rand(000, 999);
 
-        if (rand(111,999) % 2 == 0){
-            $refCode = $str1.$rand;
-        }else{
-            $refCode = $rand.$str1;
+        if (rand(111, 999) % 2 == 0) {
+            $refCode = $str1 . $rand;
+        }
+        else {
+            $refCode = $rand . $str1;
         }
         return $refCode;
     }
 
     public function refreshCaptcha()
     {
-        return response()->json(['captcha'=> captcha_img()]);
+        return response()->json(['captcha' => captcha_img()]);
     }
 }
