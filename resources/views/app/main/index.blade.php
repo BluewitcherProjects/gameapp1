@@ -148,82 +148,81 @@
                     x-transition:enter-start="opacity-0 transform translate-y-4"
                     x-transition:enter-end="opacity-100 transform translate-y-0" class="relative group">
 
+                    <!-- Glow Effect -->
                     <div
-                        class="absolute -inset-0.5 bg-gradient-to-b from-accent-cyan to-primary-teal rounded-3xl blur opacity-30 group-hover:opacity-75 transition duration-500">
+                        class="absolute -inset-0.5 bg-gradient-to-br from-accent-cyan via-primary-teal to-accent-cyan rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
                     </div>
 
+                    <!-- Card Container -->
                     <div
-                        class="relative bg-primary-midnight rounded-3xl border border-white/10 overflow-hidden hover:border-accent-cyan/50 transition-colors duration-300 h-full flex flex-col shadow-2xl">
+                        class="relative bg-gradient-to-br from-primary-midnight to-primary-midnight/95 rounded-2xl border border-accent-cyan/20 overflow-hidden hover:border-accent-cyan/40 transition-all duration-300 h-full flex flex-col shadow-xl">
 
-                        <!-- Card Image Header -->
-                        <div class="relative h-56 overflow-hidden">
-                            <img src="{{ asset($element->photo) }}"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-primary-midnight via-primary-midnight/50 to-transparent">
-                            </div>
-
-                            <div class="absolute top-5 right-5">
+                        <!-- Compact Header with Plan Name & Validity -->
+                        <div
+                            class="relative bg-gradient-to-r from-accent-cyan/10 to-primary-teal/10 px-5 py-4 border-b border-white/5">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-white font-bold text-lg">{{ $element->name ?? 'Premium Plan' }}</h3>
                                 <span
-                                    class="px-4 py-2 rounded-xl bg-black/70 backdrop-blur-md border border-accent-gold/50 text-accent-gold text-sm font-bold shadow-xl">
+                                    class="px-3 py-1 rounded-lg bg-accent-gold/20 border border-accent-gold/30 text-accent-gold text-xs font-bold">
                                     {{ $element->validity }} Days
                                 </span>
-                            </div>
-
-                            <div class="absolute bottom-5 left-5 right-5">
-                                <h3 class="text-white font-bold text-2xl drop-shadow-lg truncate">{{ $element->name ??
-                                    'Premium Plan' }}</h3>
                             </div>
                         </div>
 
                         <!-- Card Body -->
-                        <div class="p-6 flex-1 flex flex-col">
-                            <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="p-5 flex-1 flex flex-col space-y-4">
+
+                            <!-- Investment Amount - Primary Focus -->
+                            <div
+                                class="text-center py-4 bg-gradient-to-br from-accent-cyan/10 to-transparent rounded-xl border border-accent-cyan/20">
+                                <p class="text-xs uppercase tracking-wider text-metallic-silver mb-1">Investment Amount
+                                </p>
+                                <p class="text-3xl font-bold text-accent-cyan">₹{{ number_format($element->price, 0) }}
+                                </p>
+                            </div>
+
+                            <!-- Stats Grid -->
+                            <div class="grid grid-cols-2 gap-3">
                                 <div
-                                    class="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 border border-white/10 text-center backdrop-blur-sm hover:border-accent-cyan/30 transition-colors duration-300">
-                                    <p class="text-xs uppercase tracking-wider text-metallic-silver mb-1.5 font-medium">
-                                        Daily Income</p>
-                                    <p class="text-white font-bold text-base">₹{{
+                                    class="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-accent-cyan/20 transition-colors">
+                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Daily
+                                        Income</p>
+                                    <p class="text-white font-bold text-sm">₹{{
                                         number_format($element->commission_with_avg_amount / $element->validity, 0) }}
                                     </p>
                                 </div>
                                 <div
-                                    class="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 border border-white/10 text-center backdrop-blur-sm hover:border-accent-gold/30 transition-colors duration-300">
-                                    <p class="text-xs uppercase tracking-wider text-metallic-silver mb-1.5 font-medium">
-                                        Total Return</p>
-                                    <p class="text-accent-gold font-bold text-lg">₹{{
+                                    class="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-accent-gold/20 transition-colors">
+                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Total
+                                        Return</p>
+                                    <p class="text-accent-gold font-bold text-sm">₹{{
                                         number_format($element->commission_with_avg_amount, 0) }}</p>
                                 </div>
                             </div>
 
-                            <div
-                                class="flex justify-between items-center mb-6 px-3 py-4 bg-white/5 rounded-xl border border-white/5">
-                                <div class="text-left">
-                                    <p class="text-xs text-metallic-silver mb-1 font-medium">Investment</p>
-                                    <p class="text-xl font-bold text-accent-cyan">₹{{ number_format($element->price, 0)
-                                        }}</p>
-                                </div>
-                                <div class="w-px h-10 bg-white/10"></div>
-                                <div class="text-right">
-                                    <p class="text-xs text-metallic-silver mb-1 font-medium">ROI</p>
-                                    <p class="text-base font-bold text-emerald-400">
+                            <!-- ROI Badge -->
+                            <div class="flex items-center justify-center py-2">
+                                <div class="px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/30">
+                                    <span class="text-[10px] uppercase tracking-wider text-emerald-400 mr-2">ROI</span>
+                                    <span class="text-emerald-400 font-bold text-base">
                                         {{ number_format((($element->commission_with_avg_amount - $element->price) /
                                         $element->price) * 100, 1) }}%
-                                    </p>
+                                    </span>
                                 </div>
                             </div>
 
-                            <div class="mt-auto">
+                            <!-- Action Button -->
+                            <div class="mt-auto pt-2">
                                 @if($element->presale == 'yes')
                                 <button disabled
-                                    class="w-full py-3.5 rounded-xl bg-gray-700/50 text-gray-400 font-bold text-xs tracking-widest uppercase border border-white/5 cursor-not-allowed">
+                                    class="w-full py-3 rounded-xl bg-gray-700/50 text-gray-400 font-semibold text-sm tracking-wide uppercase border border-white/5 cursor-not-allowed">
                                     Pre-Sale Active
                                 </button>
                                 @else
                                 <button @click="openPurchaseModal({{$element->id}})"
-                                    class="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-cyan to-primary-teal text-white font-bold text-xs tracking-widest uppercase shadow-lg shadow-accent-cyan/30 border border-white/10 hover:shadow-accent-cyan/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group/btn">
+                                    class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-cyan to-primary-teal text-white font-semibold text-sm tracking-wide uppercase shadow-lg shadow-accent-cyan/25 border border-white/10 hover:shadow-accent-cyan/40 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group/btn">
                                     <span
-                                        class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
+                                        class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
                                     <span class="relative">Invest Now</span>
                                 </button>
                                 @endif
@@ -462,13 +461,4 @@
         // Enhanced Slider Logic
         const items = document.querySelectorAll('.carousel-item');
         let currentItem = 0;
-        if (items.length > 0) {
-            items[0].classList.remove('opacity-0');
-            setInterval(() => {
-                items[currentItem].classList.add('opacity-0');
-                currentItem = (currentItem + 1) % items.length;
-                items[currentItem].classList.remove('opacity-0');
-            }, 6000); // 6 seconds for better readability
-        }
-    </script>
-</x-app-layout>
+        if (ite
