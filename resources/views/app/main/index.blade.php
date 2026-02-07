@@ -83,7 +83,8 @@
                                 <span
                                     class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Withdraw</span>
                             </a>
-                            <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/+1fjaTnS-uV85MThl' }}"
+                            <a href="{{ App\Models\Setting::first()?->telegram ?? App\Models\Setting::first()?->whatsapp ?? 'https://t.me/+1fjaTnS-uV85MThl' }}"
+                                target="_blank" rel="noopener noreferrer"
                                 class="flex flex-col items-center group text-center">
                                 <div
                                     class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-400/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-blue-500/50 transition-all duration-300">
@@ -94,7 +95,8 @@
                                     class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Channel</span>
                             </a>
 
-                            <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}"
+                            <a href="{{ App\Models\Setting::first()?->telegram ?? App\Models\Setting::first()?->whatsapp ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}"
+                                target="_blank" rel="noopener noreferrer"
                                 class="flex flex-col items-center group text-center">
                                 <div
                                     class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-purple-500/50 transition-all duration-300">
@@ -417,7 +419,7 @@
                     </ul>
 
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}" target="_blank"
+                        <a href="{{ App\Models\Setting::first()?->telegram ?? App\Models\Setting::first()?->whatsapp ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}" target="_blank" rel="noopener noreferrer"
                             class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-lg shadow-blue-500/20 px-6 py-3.5 bg-[#229ED9] text-sm font-bold text-white hover:bg-[#1e8dbf] focus:outline-none transition-all duration-300">
                             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                 <path
