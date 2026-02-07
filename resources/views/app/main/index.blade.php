@@ -125,70 +125,72 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
                 <div x-show="activeTab === 'normal'" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-cyan/40 transition-all duration-300">
-                    <div class="p-5">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center flex-shrink-0">
-                                <img src="{{ asset($element->photo) }}" alt="" class="w-10 h-10 object-contain">
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <h3 class="text-white font-bold text-lg truncate">{{ $element->name }}</h3>
+                    <div class="flex flex-row p-4 gap-4 min-h-[180px]">
+                        <!-- Left: big image -->
+                        <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden">
+                            <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain">
+                        </div>
+                        <!-- Right: name, horizontal stats, button -->
+                        <div class="flex-1 min-w-0 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
                                 <span class="text-accent-cyan text-xs font-medium">{{ $element->validity }} Days</span>
                             </div>
+                            <div class="flex flex-row gap-2 mt-2">
+                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs">Invest</p>
+                                    <p class="text-white font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->price, 0) }}</p>
+                                </div>
+                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs">Daily</p>
+                                    <p class="text-accent-cyan font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
+                                </div>
+                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs">Total</p>
+                                    <p class="text-accent-gold font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
+                                </div>
+                            </div>
+                            @if($element->presale == 'yes')
+                            <button disabled class="w-full mt-2 py-2.5 rounded-xl bg-white/5 text-gray-500 text-sm font-bold border border-white/5 cursor-not-allowed">Pre-Sale</button>
+                            @else
+                            <button @click="openPurchaseModal({{ $element->id }})" class="w-full mt-2 py-2.5 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white text-sm font-bold hover:opacity-95 transition-opacity">Invest Now</button>
+                            @endif
                         </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
-                                <p class="text-gray-400 text-xs">Invest</p>
-                                <p class="text-white font-bold text-sm">₹{{ number_format($element->price, 0) }}</p>
-                            </div>
-                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
-                                <p class="text-gray-400 text-xs">Daily</p>
-                                <p class="text-accent-cyan font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
-                            </div>
-                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
-                                <p class="text-gray-400 text-xs">Total</p>
-                                <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
-                            </div>
-                        </div>
-                        @if($element->presale == 'yes')
-                        <button disabled class="w-full py-3 rounded-xl bg-white/5 text-gray-500 text-sm font-bold border border-white/5 cursor-not-allowed">Pre-Sale</button>
-                        @else
-                        <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white text-sm font-bold hover:opacity-95 transition-opacity">Invest Now</button>
-                        @endif
                     </div>
                 </div>
                 @endforeach
 
                 @foreach(\App\Models\Package::where('type','welfare')->get() as $element)
                 <div x-show="activeTab === 'welfare'" style="display: none;" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-gold/40 transition-all duration-300">
-                    <div class="p-5">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center flex-shrink-0">
-                                <img src="{{ asset($element->photo) }}" alt="" class="w-10 h-10 object-contain">
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <h3 class="text-white font-bold text-lg truncate">{{ $element->name }}</h3>
+                    <div class="flex flex-row p-4 gap-4 min-h-[180px]">
+                        <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden">
+                            <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain">
+                        </div>
+                        <div class="flex-1 min-w-0 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
                                 <span class="text-accent-gold text-xs font-medium">{{ $element->validity }} Days</span>
                             </div>
+                            <div class="flex flex-row gap-2 mt-2">
+                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs">Invest</p>
+                                    <p class="text-white font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->price, 0) }}</p>
+                                </div>
+                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs">Daily</p>
+                                    <p class="text-accent-gold font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
+                                </div>
+                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs">Total</p>
+                                    <p class="text-accent-gold font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
+                                </div>
+                            </div>
+                            @if($element->presale == 'yes')
+                            <button disabled class="w-full mt-2 py-2.5 rounded-xl bg-white/5 text-gray-500 text-sm font-bold border border-white/5 cursor-not-allowed">Pre-Sale</button>
+                            @else
+                            <button @click="openPurchaseModal({{ $element->id }})" class="w-full mt-2 py-2.5 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white text-sm font-bold hover:opacity-95 transition-opacity">Invest Now</button>
+                            @endif
                         </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
-                                <p class="text-gray-400 text-xs">Invest</p>
-                                <p class="text-white font-bold text-sm">₹{{ number_format($element->price, 0) }}</p>
-                            </div>
-                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
-                                <p class="text-gray-400 text-xs">Daily</p>
-                                <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
-                            </div>
-                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
-                                <p class="text-gray-400 text-xs">Total</p>
-                                <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
-                            </div>
-                        </div>
-                        @if($element->presale == 'yes')
-                        <button disabled class="w-full py-3 rounded-xl bg-white/5 text-gray-500 text-sm font-bold border border-white/5 cursor-not-allowed">Pre-Sale</button>
-                        @else
-                        <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white text-sm font-bold hover:opacity-95 transition-opacity">Invest Now</button>
-                        @endif
                     </div>
                 </div>
                 @endforeach
