@@ -139,8 +139,9 @@
                 </div>
             </div>
 
-            <!-- Plans Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Plans Horizontal Scroll Container -->
+            <div class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scrollbar-hide"
+                style="-webkit-overflow-scrolling: touch;">
 
                 <!-- Normal Plans -->
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
@@ -486,9 +487,4 @@
             items[0].classList.remove('opacity-0');
             setInterval(() => {
                 items[currentItem].classList.add('opacity-0');
-                currentItem = (currentItem + 1) % items.length;
-                items[currentItem].classList.remove('opacity-0');
-            }, 6000); // 6 seconds for better readability
-        }
-    </script>
-</x-app-layout>
+    
