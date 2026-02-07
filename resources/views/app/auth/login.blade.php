@@ -1,184 +1,187 @@
-<html data-dpr="1" style="font-size: 37.5px;">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <title>Login</title>
-    <link href="{{asset('static_new6/css/app.7b22fa66c2af28f12bf32977d4b82694.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('static_new/css/public.css')}}">
-    <script charset="utf-8" src="{{asset('static_new/js/jquery.min.js')}}"></script>
-    <script charset="utf-8" src="{{asset('static_new/js/dialog.min.js')}}"></script>
-    <script charset="utf-8" src="{{asset('static_new/js/common.js')}}"></script>
-    <link href="{{asset('static_new6/layui/layui.css')}}" rel="stylesheet">
-    <script src="{{asset('static_new6/layui/layui.js')}}"></script>
-    <link id="layuicss-layer" rel="stylesheet" href="{{asset('static_new6/layui/css/modules/layer/default/layer.css')}}" media="all">
-    <style type="text/css" title="fading circle style">
-        .circle-color-23 > div::before {
-            background-color: #ccc;
-        }
-
-        #app {
-            /*background: url(/pic/login1.jpg);*/
-            background-size: cover;
-            background-repeat: no-repeat;
-            /*min-height: 640px;*/
-            min-height: 110vh;
-            background-size: 100% 100%;
-            background-color: #fff;
-        }
-
-        .main {
-            height: 10.666667rem;
-            position: auto;
-            height: 100%;
-            width: 100%;
-            /*margin-top: -1.2rem;*/
-            background-repeat: no-repeat;
-            background-size: 100% auto;
-            -moz-background-size: 100% auto;
-            /*background-color: #61b152; */
-            /*padding-top: 2.933333rem;*/
-        }
-
-        div.chat {
-            width: 1.6rem;
-            height: 1.6rem;
-            border-radius: 50%;
-            position: fixed;
-            bottom: 0.5rem;
-            right: 0.6rem;
-            left: 50%;
-            margin-left: 3.33rem;
-            top: 45%;
-            background: #fff;
-            padding: 5px;
-            /*border: 1px solid #ccc;*/
-        }
-
-        div.chat img {
-            width: 1rem;
-            height: 1rem;
-            margin: 7px;
-        }
-
-        #app {
-            /*background-image: url('/pic/login_bj.jpg');*/
-            background-size: 70% 600%;
-            background: #fff;
-        }
-
-        .main {
-            /*background-image: url('/pic/login_bj2.jpg');*/
-            background-size: 75% 75%;
-        }
-
-        .box[data-v-c38e8882] {
-            margin: 0 auto;
-            position: relative;
-            z-index: 999;
-            border-radius: 0;
-            padding: 0.4rem;
-            padding-top: 0.666667rem;
-            margin-top: 0.266667rem;
-            background: #fff;
-            box-shadow: #ccc 2px 3px;
-            width: 95%;
-        }
-
-        .box ul li[data-v-c38e8882] {
-            overflow: hidden;
-            position: relative;
-            padding-bottom: 0.066667rem;
-            margin: 20px 0;
-            box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.16);
-            border-radius: 5px;
-            height: 60px;
-            border: 2px solid #F79700;
-        }
-    </style>
-</head>
-<body style="font-size: 12px;padding: 0">
-<div id="app"><!--en-us-->
-    <div data-v-c38e88821="" class="main"><!-- 头部图片 -->
-        <div style="width: 100%;height: 100px;margin-top:0rem;">
-            <div align="center"><img src="https://www.pedigree.in/files/styles/webp/public/2024-03/2_new.jpg.webp?VersionId=xGMRd0xnc43mdlZt5YrMYKywHDBaPOfr&itok=Ulu2Tcia" alt="" style="width: 100%;"></div>
-            <div data-v-c38e8882="" class="p3" style="margin-top:.5rem;"><p data-v-c38e8882=""></p>
-                <div data-v-c38e8882="" class="title">
-                    <div data-v-c38e8882="" class="line"></div>
-                </div>
+<x-guest-layout>
+    <div x-data="loginForm()" class="w-full">
+        <!-- Logo/Header -->
+        <div class="text-center mb-10">
+            <div
+                class="inline-flex justify-center items-center w-20 h-20 rounded-full bg-linear-to-br from-accent-gold/20 to-transparent border border-accent-gold/30 mb-6 ring-4 ring-accent-gold/5 shadow-[0_0_30px_rgba(251,191,36,0.2)]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-accent-gold drop-shadow-md" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
             </div>
-            <div data-v-c38e8882="" class="box" style="margin-top:-1.8rem;">
-                <ul data-v-c38e8882="" style=" clear: both;margin-top:0.5rem;"><label>Mobile number</label>
-                    <li data-v-c38e8882=""><input
-                            data-v-c38e8882="" type="text" name="tel" style="padding-left: 15px;" placeholder="Mobile number" value=""></li>
-                    <label>Login password</label>
-                    <li data-v-c38e8882=""><input
-                            data-v-c38e8882="" type="password" name="pwd" style="padding-left: 15px;" placeholder="Login password" value=""></li>
-                    <li data-v-c38e8882="" style="display: none;"><img data-v-c38e8882=""
-                                                                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAACsklEQVRIibVVS08TURT+pjNtoQHqBggmBSMmgEFxw4aoBIkLX0FNDHGhgDsVjKgbY2IwujL4C3ShC03EFTEuqCsUbfG54OEKE5AWWzogpZ22M5053k4hQrxT6oMvucm9d86c75xzv3uuQAzYRNg20/mfEeg6Fu/1Q75xHRSL/T8CSqWQfP0K3zvOQI9EYCsqRqirA4rXC1pe3pBA4J2BHgxCnZlB6v0oksPDECsqUHyqHY7GRgg2G9SxMUSfPEb66xQK9u5DYVMTRI8Hdk9lfgTBo4chMWPnrnq4Wg9CqvRAcDgBUVyJQIfBMjPm5xF/6YX6+RM0FtDW5y84JeAg0HaM9HicmBMiXeeZZGEYZCSTZCgKsbJxTSRu4ViEgt1ujtwFFiA4neY0vbDINeEeslReDkOWc/qOPRvAMhsZsAwgiHy9cHfF7dXmQVshHZjF0oP7cNbUmGs9HIbEhJA3gb2qCsrbN+ZcCwSQHBlZ933+2lVsudwLe22duVYnJiBV78ifwFG3E9rUlDnPXKqF/rtI+H3mOnSuC46aWrgOtDJlOVYIxuCsr+enyxVHIkGBI4eyc1WlxOioqazwpW4KnjxBaVleZz93up3S4RBXRVyCDCJ9N0kZGsqSaBol/H6abWkmpvd1dsnxcQpdOG8pZ0sCxe+jcE/3rw1Gok1Pm9pfC/nObYoNDlq5IcteVNCwB6SmWLt4l92QJHa7Pab2V5H+xtrJ5ARcLS1WbvhnsIrExw8UZPW1QrjnIsW9Q7lcWGdgZrG7AUVtxxG50vvbN/lWH6SqbSjc35zLBb/ZrYURjSI28BSpL5Nwn+2E4HIh+ughBLcb7o5OiGVl/0aQgf5jESmfDwpr3dA0OFl7drHIxdLSjX7NjyCDzMNjLC2BqQi2khLYWCb5IG+Cv8WmP/o/AeVjj8bEawqWAAAAAElFTkSuQmCC"
-                                                                       alt="" class="lco"><input data-v-c38e8882=""
-                                                                                                 type="text"
-                                                                                                 placeholder=""><img
-                            data-v-c38e8882=""
-                            src="data:image/png;base64,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"
-                            alt="" class="code"></li>
-                </ul>
-                <div data-v-c38e8882="" style="margin-top: 20px;">
-                    <button data-v-c38e8882="" class="login" style="    font-size: 20px;
-    background: #F79700;
-    border-radius: 5px;
-    height: 60px;
-    border: 2px solid #F79700;
-    color: #fff;">Login
-                    </button>
+            <h2
+                class="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-accent-gold via-white to-accent-gold tracking-tight mb-2 drop-shadow-sm">
+                Welcome Back</h2>
+            <p class="text-metallic-silver text-sm font-medium tracking-wide">Enter your details to access your
+                portfolio</p>
+        </div>
+
+        <form @submit.prevent="submitForm">
+            <!-- Mobile Number -->
+            <div class="mb-6 relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-metallic-silver group-focus-within:text-accent-cyan transition-colors duration-300"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
                 </div>
-                <div data-v-c38e8882="" style="
-            margin-top: 5px;
-        ">
-                    <div data-v-c38e8882="" class="col-xs-4"
-                         onclick="window.location.href=`https://t.me/TNL_LAB_WEBSITE_DEVELOPER`"
-                         style="padding: 0px;float: right;color: #000"><p data-v-c38e8882=""
-                                                                          style="color:#F79700;font-size: 16px;font-weight: 700;">
-                            Online</p></div>
-                    <div data-v-c38e8882="" class="col-xs-4" onclick="window.location.href=`{{url('account/register')}}`"
-                         style="padding: 0px;color:#000"><p data-v-c38e8882=""
-                                                            style="color:#F79700;font-size: 16px;font-weight: 700;">
-                            Register</p></div>
+                <input type="text" x-model="formData.phone"
+                    class="block w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-metallic-silver/50 focus:outline-hidden focus:ring-2 focus:ring-accent-cyan/50 focus:border-accent-cyan/50 transition-all duration-300 sm:text-sm shadow-inner"
+                    placeholder="Mobile Number" required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4 relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-metallic-silver group-focus-within:text-accent-gold transition-colors duration-300"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <input type="password" x-model="formData.password"
+                    class="block w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-metallic-silver/50 focus:outline-hidden focus:ring-2 focus:ring-accent-gold/50 focus:border-accent-gold/50 transition-all duration-300 sm:text-sm shadow-inner"
+                    placeholder="Password" required>
+            </div>
+
+            <!-- Forgot Password -->
+            <div class="flex items-center justify-end mb-8">
+                <a href="{{ url('forgot-password') }}"
+                    class="text-xs font-medium text-accent-cyan hover:text-white transition-colors duration-200">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" :disabled="loading"
+                class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg shadow-accent-gold/20 text-sm font-bold text-white bg-linear-to-r from-accent-gold to-orange-600 hover:from-accent-gold hover:to-orange-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95 transition-all duration-300 uppercase tracking-wider relative overflow-hidden group">
+                <span
+                    class="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
+                <span x-show="!loading" class="flex items-center">
+                    LOGIN
+                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </span>
+                <span x-show="loading" class="flex items-center" style="display: none;">
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    Processing...
+                </span>
+            </button>
+        </form>
+
+        <!-- Register Link -->
+        <div class="mt-8 text-center">
+            <p class="text-metallic-silver text-sm">
+                Don't have an account?
+                <a href="{{ url('account/register') }}"
+                    class="font-bold text-accent-cyan hover:text-white transition-colors duration-200 ml-1">
+                    Register Now
+                </a>
+            </p>
+        </div>
+
+        <!-- Support & App Links -->
+        <div class="mt-10 pt-6 border-t border-white/5 flex justify-center space-x-6">
+            <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER" class="flex flex-col items-center group">
+                <div
+                    class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent-cyan/20 transition-colors duration-300">
+                    <img src="{{ asset('pic/icon/cs1.png') }}"
+                        class="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity">
+                </div>
+                <span class="text-[10px] text-metallic-silver/60 group-hover:text-accent-cyan mt-1">Support</span>
+            </a>
+            <a href="#" class="flex flex-col items-center group">
+                <div
+                    class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent-purple/20 transition-colors duration-300">
+                    <img src="{{ asset('pic/icon/downloading.png') }}"
+                        class="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity">
+                </div>
+                <span class="text-[10px] text-metallic-silver/60 group-hover:text-accent-purple mt-1">App</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert Component -->
+    <div x-data="{ show: false, message: '', type: 'success' }"
+        @notify.window="show = true; message = $event.detail.message; type = $event.detail.type; setTimeout(() => show = false, 3000)"
+        x-show="show" x-transition:enter="transform ease-out duration-300 transition"
+        x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+        x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed top-4 right-4 z-50 max-w-sm w-full shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
+        :class="type === 'success' ? 'bg-emerald-900/90 border border-emerald-500/50' : 'bg-red-900/90 border border-red-500/50'"
+        style="display: none;">
+        <div class="p-4">
+            <div class="flex items-start">
+                <div class="shrink-0">
+                    <svg x-show="type === 'success'" class="h-6 w-6 text-emerald-400" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <svg x-show="type === 'error'" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="ml-3 w-0 flex-1 pt-0.5">
+                    <p class="text-sm font-medium text-white" x-text="message"></p>
                 </div>
             </div>
         </div>
     </div>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @include('alert-message')
+
     <script>
-        $(function () {
-            $(".login").on('click', function () {
-                var loading = null;
-                var tel = $("input[name=tel]").val();
-                var pwd = $("input[name=pwd]").val();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "{{url('login')}}",
-                    data: {phone: tel, password: pwd},
-                    type: 'POST',
-                    beforeSend: function () {
-                        message('Loading...')
-                    },
-                    success: function (data) {
-                        message(data.message)
-                        if (data.status == true) {
-                            setTimeout(function () {
-                                location.href = "{{url('dashboard')}}"
-                            }, 2000);
-                        }
-                    }
-                });
-            })
-        })
+        function loginForm() {
+            return {
+                formData: {
+                    phone: '',
+                    password: ''
+                },
+                loading: false,
+                submitForm() {
+                    this.loading = true;
+                    fetch("{{ url('login') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(this.formData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            this.loading = false;
+                            if (data.status === true) {
+                                window.dispatchEvent(new CustomEvent('notify', { detail: { message: data.message || 'Login Successful!', type: 'success' } }));
+                                setTimeout(() => {
+                                    window.location.href = "{{ url('dashboard') }}";
+                                }, 1500);
+                            } else {
+                                window.dispatchEvent(new CustomEvent('notify', { detail: { message: data.message || 'Login failed', type: 'error' } }));
+                            }
+                        })
+                        .catch(error => {
+                            this.loading = false;
+                            window.dispatchEvent(new CustomEvent('notify', { detail: { message: 'An error occurred. Please try again.', type: 'error' } }));
+                            console.error('Error:', error);
+                        });
+                }
+            }
+        }
     </script>
-</div>
-</body>
-</html>
+</x-guest-layout>
