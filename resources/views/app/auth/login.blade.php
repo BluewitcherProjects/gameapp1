@@ -119,7 +119,7 @@
 
         <!-- Support & App Links -->
         <div class="mt-10 pt-6 border-t border-white/5 flex justify-center space-x-6">
-            <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER" class="flex flex-col items-center group">
+            <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}" class="flex flex-col items-center group">
                 <div
                     class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-accent-cyan/20 transition-colors duration-300">
                     <img src="{{ asset('pic/icon/cs1.png') }}"

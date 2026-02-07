@@ -171,7 +171,7 @@
                     </x-card>
                 </a>
 
-                <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER" class="group">
+                <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}" class="group">
                     <x-card class="h-full hover:bg-white/5 transition-colors">
                         <div class="p-4 flex flex-col items-center text-center">
                             <div

@@ -14,13 +14,15 @@
             </div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10">
                 <!-- Carousel -->
-                <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
-                    <div class="carousel relative w-full h-64 sm:h-80 md:h-96">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                    <div class="carousel relative w-full h-64 sm:h-80 md:h-96 group">
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-accent-cyan/10 to-primary-teal/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                         @foreach(\App\Models\VipSlider::get() as $index => $element)
                         <div
                             class="carousel-item absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }}">
                             <img src="{{ asset($element->photo) }}"
-                                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                                class="w-full h-full object-cover transition-opacity duration-700"
+                                style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; -webkit-backface-visibility: hidden; backface-visibility: hidden; -webkit-transform: translateZ(0); transform: translateZ(0);">
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary-dark/20 to-transparent">
                             </div>
@@ -47,7 +49,7 @@
                     <div class="carousel-dots absolute bottom-4 left-0 right-0 z-20 flex justify-center gap-2">
                         @foreach(\App\Models\VipSlider::get() as $dotIndex => $el)
                         <button type="button" aria-label="Slide {{ $dotIndex + 1 }}" data-dot-index="{{ $dotIndex }}"
-                            class="carousel-dot w-2.5 h-2.5 rounded-full border border-white/30 transition-all duration-300 {{ $dotIndex === 0 ? 'bg-white scale-110' : 'bg-white/40 hover:bg-white/60' }}"></button>
+                            class="carousel-dot w-2.5 h-2.5 rounded-full border border-white/30 transition-all duration-300 {{ $dotIndex === 0 ? 'bg-white scale-110' : 'bg-white/40' }}"></button>
                         @endforeach
                     </div>
                     @endif
@@ -81,7 +83,7 @@
                                 <span
                                     class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Withdraw</span>
                             </a>
-                            <a href="https://t.me/+1fjaTnS-uV85MThl"
+                            <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/+1fjaTnS-uV85MThl' }}"
                                 class="flex flex-col items-center group text-center">
                                 <div
                                     class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-400/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-blue-500/50 transition-all duration-300">
@@ -92,7 +94,7 @@
                                     class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Channel</span>
                             </a>
 
-                            <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER"
+                            <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}"
                                 class="flex flex-col items-center group text-center">
                                 <div
                                     class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-purple-500/50 transition-all duration-300">
@@ -415,7 +417,7 @@
                     </ul>
 
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER" target="_blank"
+                        <a href="{{ App\Models\Setting::first()?->telegram ?? 'https://t.me/TNL_LAB_WEBSITE_DEVELOPER' }}" target="_blank"
                             class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-lg shadow-blue-500/20 px-6 py-3.5 bg-[#229ED9] text-sm font-bold text-white hover:bg-[#1e8dbf] focus:outline-none transition-all duration-300">
                             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                 <path
