@@ -39,7 +39,7 @@ class UserController extends Controller
         $setting = Setting::first();
 
         $payment_method = PaymentMethod::where(['id' => $method, 'status' => 'active'])->inRandomOrder()->first();
-        if (!$payment_method){
+        if (!$payment_method) {
             return back()->with('error', 'Method not available.');
         }
 
@@ -50,15 +50,15 @@ class UserController extends Controller
 
         $jsonData = '';
         $linkData = '';
-        $reference = rand(00000,99999);
+        $reference = rand(00000, 99999);
 
         // Auto Deposit
-        if($payment_method->auto && $setting->auto_deposit) {
+        if ($payment_method->auto && $setting->auto_deposit) {
             // Charge Payment
             $chargePayment = $payment->charge($reference, 'NGN', $amount, $payment_method->tag);
 
             // Exception
-            if($chargePayment['status'] == false) {
+            if ($chargePayment['status'] == false) {
                 return back()->with("error", $chargePayment['message']);
             }
 
@@ -66,7 +66,7 @@ class UserController extends Controller
                 'reference' => $chargePayment['data']['reference'],
                 'order_ref' => $chargePayment['data']['order_ref']
             ]);
-            
+
             $linkData = $chargePayment['data']['link'];
 
             $model = new Deposit();
@@ -87,14 +87,15 @@ class UserController extends Controller
 
         $channel = PaymentMethod::where('id', $method)->first();
 
-        if(!$channel){
+        if (!$channel) {
             return redirect()->back()->with('success', 'Channel not found');
         }
 
-        if($channel->type == 'usdt'){
+        if ($channel->type == 'usdt') {
             return view('app.main.deposit.recharge_confirm', compact('amount', 'channel'));
 
-        }else{
+        }
+        else {
             return view('app.main.deposit.wallet', compact('amount', 'channel'));
         }
 
@@ -105,7 +106,7 @@ class UserController extends Controller
         $model->user_id = \auth()->id();
         $model->method_name = $request->channel;
         $model->address = $request->address;
-        $model->order_id = rand(0,999999);
+        $model->order_id = rand(0, 999999);
         $model->transaction_id = $request->transaction;
         $model->amount = $request->amount;
         $model->date = date('d-m-Y H:i:s');
@@ -129,7 +130,7 @@ class UserController extends Controller
         return view('app.main.deposit.confirm', compact('amount', 'channel', 'number'));
     }
 
-    public function final($number, $trx, $amount)
+    public function final ($number, $trx, $amount)
     {
         return view('app.main.deposit.final', compact('number', 'trx', 'amount'));
     }
@@ -145,7 +146,8 @@ class UserController extends Controller
 
     public function message()
     {
-        return view('app.main.message');
+        $notices = Notice::where('status', 'active')->latest()->get();
+        return view('app.main.message', compact('notices'));
     }
 
     public function purchase_history()
@@ -177,7 +179,7 @@ class UserController extends Controller
     public function checkin()
     {
         $user = \auth()->user();
-        if ($user->checkin > 0){
+        if ($user->checkin > 0) {
             $checkin = new Checkin();
             $checkin->user_id = $user->id;
             $checkin->date = date('Y-m-d');
@@ -200,9 +202,10 @@ class UserController extends Controller
             $ledger->date = date('d-m-Y H:i');
             $ledger->save();
 
-            return response()->json(['message'=>'Check-in balance received.']);
-        }else{
-            return response()->json(['message'=>'Check-in balance 0']);
+            return response()->json(['message' => 'Check-in balance received.']);
+        }
+        else {
+            return response()->json(['message' => 'Check-in balance 0']);
         }
     }
 
@@ -335,7 +338,7 @@ class UserController extends Controller
 
     public function setting()
     {
-        return view('app.main.mine.setting');
+        return view('app.main.setting');
     }
 
     public function recharge()
@@ -352,7 +355,8 @@ class UserController extends Controller
         session()->put('uid', $uid);
         return view('app.main.deposit.payment-method', compact('amount', 'oid'));
     }
-    public function payment_Confirm(Request $request){
+    public function payment_Confirm(Request $request)
+    {
         $channel = PaymentMethod::where('id', $request->channel_id)->first();
 
         $model = new Deposit();
@@ -372,10 +376,10 @@ class UserController extends Controller
 
     public function rechargeApi(Request $request)
     {
-        if (Deposit::where('order_id', $request->oid)->first()){
-            return response()->json(['status', false, 'message'=> 'Submitted successfully']);
+        if (Deposit::where('order_id', $request->oid)->first()) {
+            return response()->json(['status', false, 'message' => 'Submitted successfully']);
         }
-        if ($request->has('amount') && $request->has('channel') && $request->has('transaction_id') && $request->has('number') && $request->has('uid')){
+        if ($request->has('amount') && $request->has('channel') && $request->has('transaction_id') && $request->has('number') && $request->has('uid')) {
             $model = new Deposit();
             $model->user_id = $request->uid;
             $model->channel = $request->channel;
@@ -386,13 +390,14 @@ class UserController extends Controller
             $model->date = date('d-m-Y H:i:s');
             $model->status = 'pending';
             $model->save();
-            return response()->json(['status', true, 'message'=> 'সফলভাবে জমা দেওয়া হয়েছে৷']);
+            return response()->json(['status', true, 'message' => 'সফলভাবে জমা দেওয়া হয়েছে৷']);
         }
     }
 
-    public function return_pay_number($method){
+    public function return_pay_number($method)
+    {
         $method = DB::table('payment_methods')->where('type', $method)->inRandomOrder()->first();
-        return response()->json(['status'=> true, 'data'=> $method]);
+        return response()->json(['status' => true, 'data' => $method]);
     }
 
     public function update_profile(Request $request)
@@ -411,33 +416,28 @@ class UserController extends Controller
     }
 
     /*public function card()
-    {
-       
-        return view('app.main.gateway_setup', compact('methods'));
-    }
-
-   public function setupGateway(Request $request)
-{
-  
-    $request->validate([
-        'realname'       => 'required|string|max:255',
-        'gateway_number' => 'required|string|max:255',
-        'ifsc'           => 'required|string|max:50',
-        'bank_name'      => 'required|string|max:255',
-    ]);
-
-    $user = User::find(Auth::id());
-
-    $user->realname       = $request->realname;
-    $user->gateway_number = $request->gateway_number;
-    $user->gateway_method = 'Bank Transfer'; 
-    $user->bank_name      = $request->bank_name;
-    $user->ifsc           = $request->ifsc;
-
-    $user->save();
-
-    return redirect()->back()->with('success', 'Your withdraw account updated.');
-}*/
+     {
+     
+     return view('app.main.gateway_setup', compact('methods'));
+     }
+     public function setupGateway(Request $request)
+     {
+     
+     $request->validate([
+     'realname'       => 'required|string|max:255',
+     'gateway_number' => 'required|string|max:255',
+     'ifsc'           => 'required|string|max:50',
+     'bank_name'      => 'required|string|max:255',
+     ]);
+     $user = User::find(Auth::id());
+     $user->realname       = $request->realname;
+     $user->gateway_number = $request->gateway_number;
+     $user->gateway_method = 'Bank Transfer'; 
+     $user->bank_name      = $request->bank_name;
+     $user->ifsc           = $request->ifsc;
+     $user->save();
+     return redirect()->back()->with('success', 'Your withdraw account updated.');
+     }*/
 
 
     public function invite()
@@ -496,10 +496,12 @@ class UserController extends Controller
                 $user->password = Hash::make($request->new_password);
                 $user->update();
                 return redirect()->route('login_password')->with('success', 'Password changed');
-            } else {
+            }
+            else {
                 return redirect()->route('login_password')->with('success', 'Password not match.');
             }
-        } else {
+        }
+        else {
             return redirect()->route('login_password')->with('success', 'Password not match');
         }
     }
@@ -515,10 +517,3 @@ class UserController extends Controller
     }
 
 }
-
-
-
-
-
-
-

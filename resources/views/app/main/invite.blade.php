@@ -1,144 +1,98 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Promotion</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{asset('static_new/style.css')}}">
-    <script src="{{asset('static_new/js/jquery.min.js')}}"></script>
-    <link href="{{asset('static_new6/layui/layui.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('static_new6/css/new.css')}}">
-    <script src="{{asset('static_new6/layui/layui.js')}}"></script>
-    <link id="layuicss-laydate" rel="stylesheet"
-          href="{{asset('static_new6/layui/css/modules/laydate/default/laydate.css?v=5.3.1')}}"
-          media="all">
-    <link id="layuicss-layer" rel="stylesheet"
-          href="{{asset('static_new6/layui/css/modules/layer/default/layer.css?v=3.5.1')}}" media="all">
-    <style>
-        #qrcode {
-            margin: 0rem auto;
-        }
+<x-app-layout>
+    <x-slot name="header">
+        {{ __('Invite Friends') }}
+    </x-slot>
 
-        #qrcode canvas {
-            padding: 8px;
-            border: 2px solid #000;
-            background: #fff;
-            border-radius: 14px;
-        }
+    <div class="py-6">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Referral Info Card -->
+                <x-card
+                    class="bg-primary-midnight/50 backdrop-blur-md overflow-hidden flex flex-col justify-center items-center text-center p-8 h-full">
+                    <div
+                        class="w-20 h-20 bg-accent-gold/20 rounded-full flex items-center justify-center mb-6 border border-accent-gold/30">
+                        <svg class="w-10 h-10 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Invite & Earn</h2>
+                    <p class="text-metallic-silver mb-8">Share your referral link with friends and earn commissions on
+                        their investments.</p>
 
-        .poster-link {
-            border: 2px solid #F79700;
-            background: #fff;
-        }
+                    <div class="bg-white/5 rounded-lg p-4 w-full mb-6 relative group cursor-pointer hover:bg-white/10 transition-colors"
+                        onclick="copyToClipboard('{{ url('register').'?inviteCode='.user()->ref_id }}')">
+                        <p class="text-xs text-metallic-silver uppercase mb-1">Your Referral Link</p>
+                        <p class="text-accent-cyan font-mono text-sm break-all truncate">{{
+                            url('register').'?inviteCode='.user()->ref_id }}</p>
+                        <div
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none group-hover:text-accent-gold text-metallic-silver transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
 
-        .poster-content {
-            /*background: url('{{asset('pic/invite.jpg')}}');*/
-            background-size: 100% 100%;
-        }
+                    <div class="flex gap-4 w-full">
+                        <button onclick="copyToClipboard('{{ user()->ref_id }}')"
+                            class="flex-1 bg-white/5 hover:bg-white/10 text-white font-bold py-3 px-4 rounded-lg transition-colors border border-white/10">
+                            Copy ID: {{ user()->ref_id }}
+                        </button>
+                        <button onclick="copyToClipboard('{{ url('register').'?inviteCode='.user()->ref_id }}')"
+                            class="flex-1 bg-accent-gold/90 hover:bg-accent-gold text-primary-dark font-bold py-3 px-4 rounded-lg transition-colors">
+                            Copy Link
+                        </button>
+                    </div>
+                </x-card>
 
-        .top-poster {
-            background: none;
-        }
-
-        .rbtn-copy {
-            width: 100%;
-            height: 36px;
-            margin: 10px 0;
-            border-radius: 20px;
-        }
-        
-        .navbar-box {
-            background: #F1AC04 !important;
-        }
-    </style>
-</head>
-<body style="background-color: #fff;width: 100%;">
-<div class="navbar-box" style="background: #F1AC04;">
-    <div class="navbar-back" onclick="javascript:history.go(-1)"><img src="{{asset('pic/back.png')}}" alt=""
-                                                                      class="navbar-ico"></div>
-    <h1 class="navbar-title">Invite friends</h1></div>
-<div class="poster-content">
-    <div class="top-poster"></div>
-    <div class="poster-ques" style="padding: 0;">
-        <div class="poster-link" style="width:100%;padding: 0;display: none;"><img src="{{asset('pic/invite.jpg')}}"
-                                                                                   style="width:100%;"></div>
-    </div>
-    <div class="poster-chat">
-        <div class="chatbox1"
-             style="margin-bottom: 20px;margin-top: 29px;background: #fff;padding: 15px;border-radius: 20px;color: #F79700;">
-            <div style="padding: 3px 20px;color:#F79700;border-radius: 20px;"><img src="{{asset('pic/icon/invite1.png')}}"
-                                                                                   style="float: left;width: 35px;"><img
-                    src="{{asset('pic/icon/invite2.png')}}" style="width: 35px;"><img src="{{asset('pic/icon/invite3.png')}}"
-                                                                         style="float: right;width: 35px;"></div>
-            <div><span style="float: left;">  LV1 =20%</span><span style=""> LV2 =3%</span><span style="float: right;"> LV3 =1%</span>
+                <!-- Commission Tiers -->
+                <x-card class="bg-primary-midnight/50 backdrop-blur-md overflow-hidden p-6">
+                    <h3 class="text-xl font-bold text-white mb-6">Commission Tiers</h3>
+                    <div class="space-y-4">
+                        <div
+                            class="bg-gradient-to-r from-primary-dark to-primary-teal p-4 rounded-lg border border-accent-cyan/20 relative overflow-hidden">
+                            <div
+                                class="absolute -right-4 -bottom-4 opacity-10 text-white text-9xl font-bold leading-none select-none">
+                                1</div>
+                            <div class="relative z-10 flex justify-between items-center">
+                                <div>
+                                    <h4 class="text-accent-cyan font-bold text-lg">Level 1</h4>
+                                    <p class="text-metallic-silver text-sm">Direct Referrals</p>
+                                </div>
+                                <div class="text-3xl font-bold text-white">20%</div>
+                            </div>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/5 flex justify-between items-center">
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Level 2</h4>
+                                <p class="text-metallic-silver text-sm">Friends of Friends</p>
+                            </div>
+                            <div class="text-2xl font-bold text-metallic-silver">3%</div>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg border border-white/5 flex justify-between items-center">
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Level 3</h4>
+                                <p class="text-metallic-silver text-sm">Extended Network</p>
+                            </div>
+                            <div class="text-2xl font-bold text-metallic-silver">1%</div>
+                        </div>
+                    </div>
+                </x-card>
             </div>
         </div>
     </div>
-    <div style="width: 100%;background: #fff;border-radius: 20px;padding: 20px;padding-bottom: 100px;color: #F79700;">
-        <img src="{{asset('pic/invite23.jpg')}}">
-        <div style="padding: 0 10px;"><p style="display: flex;"><span
-                    style="display: block;width: 50%;font-size: 26px;font-weight: 600;border-right: 2px solid;">Referral link</span><span
-                    style="display: block;width: 50%;overflow: hidden;padding-left:15px;">{{url('account/register').'?inviteCode='.auth()->user()->ref_id}}</span>
-            </p>
-            <p>
-                <button style="background:#F79700;" class="rbtn-copy"
-                        onclick="copy_txt('{{url('account/register').'?inviteCode='.auth()->user()->ref_id}}')">COPY
-                </button>
-            </p>
-        </div>
-        <div style="border-radius: 20px;background: url('{{asset('pic/invite3.jpg')}}');background-size: 100% 100%;padding: 20px 10px;text-align: center;">
-            <div id="qrcode">
-                <img style="width: 60%" src="https://cdn.pixabay.com/photo/2013/07/12/14/45/qr-code-148732_640.png" alt="">
-            </div>
-            <p style="padding: 10px;"><span
-                    style="font-size: 20px;;font-weight: 600;border-right: 2px solid;padding:0 15px;">Referrer lD</span><span
-                    style="font-size: 20px;overflow: hidden;padding:0 15px;">{{user()->ref_id}}</span></p>
-            <p>
-                <button style="background:#F79700;" class="rbtn-copy" onclick="copy_txt('{{user()->ref_id}}')">COPY</button>
-            </p>
-        </div>
-    </div>
-</div>
-@include('app.layout.manu')
-<input name="" id="webcopyinput" type="text"
-       style="color: #FF0000; font-size: 20px; width: 1px; height: 1px; border: hidden; font-weight: bold; text-align: center;"
-       value="">
-<link href="{{asset('static_new6/css/app.7b22fa66c2af28f12bf32977d4b82694.css')}}" rel="stylesheet">
-<link rel="stylesheet" href="{{asset('static_new/css/public.css')}}">
-<script charset="utf-8" src="{{asset('static_new/js/jquery.min.js')}}"></script>
-<script charset="utf-8" src="{{asset('static_new/js/dialog.min.js')}}"></script>
-<script charset="utf-8" src="{{asset('static_new/js/common.js')}}"></script>
-<link href="{{asset('static_new6/layui/layui.css')}}" rel="stylesheet">
-<script src="{{asset('static_new6/layui/layui.js')}}"></script>
-<link id="layuicss-layer" rel="stylesheet" href="{{asset('static_new6/layui/css/modules/layer/default/layer.css')}}" media="all">
-{{--@include('alert-message')--}}
-<script>
 
-    function copy_txt(text) {
-        var loading = null;
-        const body = document.body;
-        const input = document.createElement("input");
-        body.append(input);
-        input.style.opacity = 0;
-        input.value = text.replaceAll(' ', '');
-        input.select();
-        input.setSelectionRange(0, input.value.length);
-        document.execCommand("Copy");
-        input.blur();
-        input.remove();
-
-        loading = $(document).dialog({
-            type: 'notice',
-            infoIcon: '{{asset('static_new/img/loading.gif')}}',
-            infoText: 'Loading',
-            autoClose: 0
-        });
-
-        setTimeout(function (){
-            loading.close();
-            $(document).dialog({infoText: 'copy successfully'});
-        }, 500)
-
-    }
-</script>
-</body>
-</html>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // You might want to show a toast/notification here using a proper library or custom Alpine component
+                alert('Copied to clipboard!'); // Temporary fallback
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</x-app-layout>

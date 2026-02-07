@@ -1,58 +1,79 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="{{asset('CLREnergy/dist/favicon.ico')}}">
-    <title>{{env('APP_NAME')}}</title>
-    <link href="{{asset('CLREnergy/dist/css/chunk-vendors.a9285ddb.css')}}" rel="stylesheet">
-    <link href="{{asset('CLREnergy/dist/css/app.865ef51f.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('CLREnergy/dist/css/829.d383075d.css')}}">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-</head>
-<body class="">
-<div id="app" data-v-app="">
-    <div>
-        <div class="aboutpage" data-v-17a47981="">
-            <div class="van-nav-bar van-hairline--bottom navboxi" data-v-17a47981="">
-                <div class="van-nav-bar__content">
-                    <div class="van-nav-bar__left van-haptics-feedback"
-                         onclick="window.location.href='{{route('dashboard')}}'"><i
-                            class="van-badge__wrapper van-icon van-icon-arrow-left van-nav-bar__arrow"><!----><!---->
-                            <!----></i><!----></div>
-                    <div class="van-nav-bar__title van-ellipsis">Guide</div><!----></div>
-            </div>
-            <div class="about-bg" data-v-17a47981="">
-                <div data-v-17a47981=""><p class="title" data-v-17a47981=""></p>
-                    <p class="about-tree textuis" data-v-17a47981="">
-                    <p><span style="font-size: 18px;"><strong><span
-                                    style="font-family: arial, helvetica, sans-serif;"></span></strong></span></p>
-                    <p><span style=""></span></p>
-                    <p><img
-                            src="{{asset('a1.PNG')}}"
-                            title="123.png" alt="123.png" style="width: 100%;"><img src="{{asset('a2.PNG')}}"
-                                                                                    title="photo_2024-01-08_15-00-35.jpg"
-                                                                                    alt="photo_2024-01-08_15-00-35.jpg"
-                                                                                    style="width: 100%;"></p>
-                    <p><img src="{{asset('a3.PNG')}}"
-                            title="444.png" alt="444.png" style="width: 100%;"><span
-                            style=""><br></span></p>
-                    <p><span style=""><br></span></p>
-                    <p><span style=""><img
-                                src="{{asset('a4.PNG')}}"
-                                title="5.png" alt="5.png" style="width: 100%;"></span></p>
-                    <p><br></p>
-                    <p><img src="{{asset('a5.PNG')}}"
-                            title="6.png" alt="6.png" style="width: 100%;"></p>
-                    <p><span><br></span></p>
-                    <p><br></p>
-                    <p><img src="{{asset('a6.PNG')}}"
-                            title="产品收益表 (3).png" alt="产品收益表 (3).png" style="width: 100%;"></p>
+<x-app-layout>
+    <x-slot name="header">
+        {{ __('Privacy & Rules') }}
+    </x-slot>
+
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <x-card class="bg-primary-midnight/50 backdrop-blur-md overflow-hidden">
+                <div class="p-6 space-y-8">
+
+                    <!-- Section 1 -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-accent-gold/20 flex items-center justify-center text-accent-gold">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Platform Rules</h3>
+                        </div>
+                        <div class="pl-13 text-metallic-silver space-y-2 text-sm leading-relaxed">
+                            <p>1. Each user is allowed only one account. Creating multiple accounts to abuse the system
+                                will result in permanent suspension.</p>
+                            <p>2. Withdrawals are processed daily between 10:00 AM and 6:00 PM. Please ensure your bank
+                                details are correct.</p>
+                            <p>3. The platform reserves the right to modify investment plans and rates at any time.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-px bg-white/5"></div>
+
+                    <!-- Section 2 -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-accent-cyan/20 flex items-center justify-center text-accent-cyan">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Privacy Policy</h3>
+                        </div>
+                        <div class="pl-13 text-metallic-silver space-y-2 text-sm leading-relaxed">
+                            <p>We take your privacy seriously. Your personal information and transaction data are
+                                encrypted and stored securely.</p>
+                            <p>We do not share your data with third parties without your explicit consent.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-px bg-white/5"></div>
+
+                    <!-- Section 3 -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-primary-teal/20 flex items-center justify-center text-primary-teal">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Investments</h3>
+                        </div>
+                        <div class="pl-13 text-metallic-silver space-y-2 text-sm leading-relaxed">
+                            <p>All investments carry risk. Past performance is not indicative of future results.</p>
+                            <p>Users are advised to invest responsibly and within their means.</p>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+            </x-card>
         </div>
-    </div><!----></div>
-</body>
-</html>
+    </div>
+</x-app-layout>

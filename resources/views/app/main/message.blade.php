@@ -1,51 +1,38 @@
-<html style="--status-bar-height: 0px; --top-window-height: 0px; --window-left: 0px; --window-right: 0px; --window-margin: 0px; --window-top: calc(var(--top-window-height) + calc(44px + env(safe-area-inset-top))); --window-bottom: 0px;">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Message</title>
-    <meta property="og:title" content="Agridevelop Plus">
-    <meta property="og:image" content="{{asset('static/login/logo.png')}}">
-    <meta name="description"
-          content="In the previous Agridevelop project, many people made their first pot of gold through the Agridevelop App. The new AgriDevelop Plus App has just opened registration in March 2024. We will build the best and most long-lasting online money-making application in India. Join AgriDevelop as soon as possible and you will have the best opportunity to make money.	">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
-    <link rel="stylesheet" href="{{asset('static/index.2da1efab.css')}}">
-    <link rel="stylesheet" href="{{asset('message.css')}}">
-</head>
-<body class="uni-body pages-my-message">
-<uni-app class="uni-app--maxwidth">
-    <uni-page data-page="pages/my/message">
-        <uni-page-head uni-page-head-type="default">
-            <div class="uni-page-head" style="background-color: #0fb40f; color: rgb(255, 255, 255);">
-                <div class="uni-page-head-hd">
-                    <div class="uni-page-head-btn" onclick="window.location.href='{{route('profile')}}'"><i class="uni-btn-icon"
-                                                      style="color: rgb(255, 255, 255); font-size: 27px;"></i></div>
-                    <div class="uni-page-head-ft"></div>
-                </div>
-                <div class="uni-page-head-bd">
-                    <div class="uni-page-head__title" style="font-size: 16px; opacity: 1;"> Message</div>
-                </div>
-                <div class="uni-page-head-ft"></div>
-            </div>
-            <div class="uni-placeholder"></div>
-        </uni-page-head>
-        <uni-page-wrapper>
-            <uni-page-body>
-                <uni-view data-v-8cadd870="" class="content">
-                    <uni-view data-v-8cadd870="" class="mssagebox">
-                        <uni-view data-v-8cadd870="" class="message">
-                            <uni-view data-v-8cadd870="" class="con">Only the ultimate hard work can be worthy of the
-                                ultimate landscape. Agridevelop Plus gives you the opportunity to realize your dreams
-                            </uni-view>
-                            <uni-view data-v-8cadd870="" class="date">04-04-2024 09:16:34</uni-view>
-                        </uni-view>
-                    </uni-view>
+<x-app-layout>
+    <x-slot name="header">
+        {{ __('News & Updates') }}
+    </x-slot>
 
-                    @include('app.layout.manu')
-                </uni-view>
-            </uni-page-body>
-        </uni-page-wrapper>
-    </uni-page>
-</uni-app>
-</body>
-</html>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex flex-col space-y-6">
+                @forelse($notices as $notice)
+                <x-card class="active:scale-[0.99] transition-transform">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white">{{ $notice->title ?? 'System Notice' }}</h3>
+                            <span class="text-xs text-metallic-silver bg-white/5 py-1 px-3 rounded-full">
+                                {{ $notice->created_at->format('d M Y, h:i A') }}
+                            </span>
+                        </div>
+                        <div class="prose prose-invert max-w-none text-metallic-silver">
+                            {!! nl2br(e($notice->content ?? $notice->notice)) !!}
+                        </div>
+                    </div>
+                </x-card>
+                @empty
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-metallic-silver" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                    </div>
+                    <p class="text-metallic-silver">No new messages at the moment.</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+</x-app-layout>
