@@ -149,60 +149,68 @@
                     x-transition:enter-end="opacity-100 transform translate-y-0" class="relative group">
 
                     <div
-                        class="absolute -inset-0.5 bg-gradient-to-b from-accent-cyan to-primary-teal rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500">
+                        class="absolute -inset-0.5 bg-gradient-to-b from-accent-cyan to-primary-teal rounded-3xl blur opacity-30 group-hover:opacity-75 transition duration-500">
                     </div>
 
                     <div
-                        class="relative bg-primary-midnight rounded-2xl border border-white/10 overflow-hidden hover:border-accent-cyan/50 transition-colors duration-300 h-full flex flex-col">
+                        class="relative bg-primary-midnight rounded-3xl border border-white/10 overflow-hidden hover:border-accent-cyan/50 transition-colors duration-300 h-full flex flex-col shadow-2xl">
 
                         <!-- Card Image Header -->
-                        <div class="relative h-52 overflow-hidden">
+                        <div class="relative h-56 overflow-hidden">
                             <img src="{{ asset($element->photo) }}"
                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                             <div
-                                class="absolute inset-0 bg-gradient-to-t from-primary-midnight via-transparent to-transparent">
+                                class="absolute inset-0 bg-gradient-to-t from-primary-midnight via-primary-midnight/50 to-transparent">
                             </div>
 
-                            <div class="absolute top-4 right-4 animate-pulse">
+                            <div class="absolute top-5 right-5">
                                 <span
-                                    class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-accent-gold/50 text-accent-gold text-xs font-bold shadow-lg">
-                                    {{ $element->validity }} Days Validity
+                                    class="px-4 py-2 rounded-xl bg-black/70 backdrop-blur-md border border-accent-gold/50 text-accent-gold text-sm font-bold shadow-xl">
+                                    {{ $element->validity }} Days
                                 </span>
                             </div>
 
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <h3 class="text-white font-bold text-xl drop-shadow-md truncate">{{ $element->name ??
+                            <div class="absolute bottom-5 left-5 right-5">
+                                <h3 class="text-white font-bold text-2xl drop-shadow-lg truncate">{{ $element->name ??
                                     'Premium Plan' }}</h3>
                             </div>
                         </div>
 
                         <!-- Card Body -->
-                        <div class="p-6 flex-1 flex flex-col">
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <div class="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Daily
+                        <div class="p-7 flex-1 flex flex-col">
+                            <div class="grid grid-cols-2 gap-5 mb-7">
+                                <div
+                                    class="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 border border-white/10 text-center backdrop-blur-sm hover:border-accent-cyan/30 transition-colors duration-300">
+                                    <p
+                                        class="text-xs uppercase tracking-widest text-metallic-silver mb-2 font-semibold">
+                                        Daily
                                         Income</p>
-                                    <p class="text-white font-bold text-lg">₹{{
+                                    <p class="text-white font-bold text-2xl">₹{{
                                         number_format($element->commission_with_avg_amount / $element->validity, 0) }}
                                     </p>
                                 </div>
-                                <div class="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Total
+                                <div
+                                    class="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 border border-white/10 text-center backdrop-blur-sm hover:border-accent-gold/30 transition-colors duration-300">
+                                    <p
+                                        class="text-xs uppercase tracking-widest text-metallic-silver mb-2 font-semibold">
+                                        Total
                                         Return</p>
-                                    <p class="text-accent-gold font-bold text-lg">₹{{
+                                    <p class="text-accent-gold font-bold text-2xl">₹{{
                                         number_format($element->commission_with_avg_amount, 0) }}</p>
                                 </div>
                             </div>
 
-                            <div class="flex justify-between items-center mb-6 px-2">
+                            <div
+                                class="flex justify-between items-center mb-7 px-3 py-5 bg-white/5 rounded-2xl border border-white/5">
                                 <div class="text-left">
-                                    <p class="text-xs text-metallic-silver">Investment</p>
-                                    <p class="text-2xl font-bold text-accent-cyan">₹{{ number_format($element->price, 0)
+                                    <p class="text-sm text-metallic-silver mb-1 font-medium">Investment</p>
+                                    <p class="text-3xl font-bold text-accent-cyan">₹{{ number_format($element->price, 0)
                                         }}</p>
                                 </div>
+                                <div class="w-px h-12 bg-white/10"></div>
                                 <div class="text-right">
-                                    <p class="text-xs text-metallic-silver">ROI</p>
-                                    <p class="text-lg font-bold text-emerald-400">
+                                    <p class="text-sm text-metallic-silver mb-1 font-medium">ROI</p>
+                                    <p class="text-2xl font-bold text-emerald-400">
                                         {{ number_format((($element->commission_with_avg_amount - $element->price) /
                                         $element->price) * 100, 1) }}%
                                     </p>
@@ -212,13 +220,15 @@
                             <div class="mt-auto">
                                 @if($element->presale == 'yes')
                                 <button disabled
-                                    class="w-full py-3.5 rounded-xl bg-gray-700/50 text-gray-400 font-bold text-sm tracking-widest uppercase border border-white/5 cursor-not-allowed">
+                                    class="w-full py-4 rounded-xl bg-gray-700/50 text-gray-400 font-bold text-base tracking-widest uppercase border border-white/5 cursor-not-allowed">
                                     Pre-Sale Active
                                 </button>
                                 @else
                                 <button @click="openPurchaseModal({{$element->id}})"
-                                    class="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-cyan to-primary-teal text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-accent-cyan/20 border border-white/10 hover:shadow-accent-cyan/40 hover:-translate-y-1 transition-all duration-300">
-                                    Invest Now
+                                    class="w-full py-4 rounded-xl bg-gradient-to-r from-accent-cyan to-primary-teal text-white font-bold text-base tracking-widest uppercase shadow-xl shadow-accent-cyan/30 border border-white/10 hover:shadow-accent-cyan/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group/btn">
+                                    <span
+                                        class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
+                                    <span class="relative">Invest Now</span>
                                 </button>
                                 @endif
                             </div>
