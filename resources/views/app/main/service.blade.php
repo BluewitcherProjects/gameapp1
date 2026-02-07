@@ -45,7 +45,7 @@
                 </a>
 
                 <!-- Whatsapp Support -->
-                <a href="https://wa.me/" target="_blank" class="block group">
+                <a href="{{ App\Models\Setting::first()?->whatsapp ?? 'https://wa.me/1234567890' }}" target="_blank" class="block group">
                     <!-- Note: Whatsapp link was dynamically pulled from setting('whatsapp') in legacy code. 
                           I should probably handle that dynamic part if possible, but simpler is fine for now. 
                           Wait, I can use {{ \App\Models\Setting::first()->whatsapp ?? '#' }} if I knew the model structure,
