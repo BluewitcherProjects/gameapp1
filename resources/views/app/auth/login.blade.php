@@ -110,7 +110,7 @@
         <div class="mt-8 text-center">
             <p class="text-metallic-silver text-sm">
                 Don't have an account?
-                <a href="{{ url('account/register') }}"
+                <a href="{{ url('register') }}"
                     class="font-bold text-accent-cyan hover:text-white transition-colors duration-200 ml-1">
                     Register Now
                 </a>
