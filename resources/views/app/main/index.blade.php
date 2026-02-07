@@ -461,4 +461,13 @@
         // Enhanced Slider Logic
         const items = document.querySelectorAll('.carousel-item');
         let currentItem = 0;
-        if (ite
+        if (items.length > 0) {
+            items[0].classList.remove('opacity-0');
+            setInterval(() => {
+                items[currentItem].classList.add('opacity-0');
+                currentItem = (currentItem + 1) % items.length;
+                items[currentItem].classList.remove('opacity-0');
+            }, 6000); // 6 seconds for better readability
+        }
+    </script>
+</x-app-layout>
