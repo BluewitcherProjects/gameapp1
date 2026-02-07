@@ -26,21 +26,6 @@
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary-dark/20 to-transparent">
                             </div>
-
-                            <!-- Carousel Content Overlay -->
-                            <div class="absolute bottom-0 left-0 w-full p-6 sm:p-10">
-                                <span
-                                    class="inline-block py-1 px-3 rounded-full bg-accent-gold/20 border border-accent-gold/30 text-accent-gold text-xs font-bold mb-2 backdrop-blur-md">
-                                    PREMIUM INVESTMENT
-                                </span>
-                                <h2
-                                    class="text-white text-2xl sm:text-4xl font-bold tracking-tight mb-2 drop-shadow-lg">
-                                    Grow Your Wealth
-                                </h2>
-                                <p class="text-metallic-silver text-sm sm:text-base max-w-lg drop-shadow-md">
-                                    Experience the next level of financial freedom with our exclusive plans.
-                                </p>
-                            </div>
                         </div>
                         @endforeach
                     </div>
