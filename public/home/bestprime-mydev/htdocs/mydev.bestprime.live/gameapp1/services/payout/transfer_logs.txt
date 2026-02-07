@@ -1,0 +1,24 @@
+2025-09-25 09:31:03 - POST Data: {"_token":"yIUA7ku4Hep7T7T6N4RKYVFNWe9zuPVK4LI9h1OE","trx":"QEW487DDC6FC","account_number":"9792219718","amount":"135.00","account_name":"Suri","ifsc_code":""}
+2025-09-25 09:31:03 - Error: Missing required form fields.
+2025-10-05 05:59:19 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":""}
+2025-10-05 05:59:19 - Error: Missing required form fields.
+2025-10-05 05:59:42 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":""}
+2025-10-05 05:59:42 - Error: Missing required form fields.
+2025-10-05 06:03:26 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":""}
+2025-10-05 06:03:26 - Error: Missing required form fields.
+2025-10-05 06:03:41 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":""}
+2025-10-05 06:03:41 - Error: Missing required form fields.
+2025-10-05 06:07:33 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":""}
+2025-10-05 06:07:33 - Error: Missing required form fields.
+2025-10-05 06:28:43 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":"JIOP0000001"}
+2025-10-05 06:28:43 - Response: {"signType":null,"sign":null,"respCode":"FAIL","mchId":null,"merTransferId":null,"transferAmount":null,"applyDate":null,"tradeNo":null,"tradeResult":null,"errorMsg":"MER_IP_ILLEGE"}
+2025-10-05 06:28:43 - Transaction failed: MER_IP_ILLEGE
+2025-10-05 06:32:34 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEWDE961CCF2","account_number":"003521713029643","amount":"900.00","account_name":"Pritam roy","ifsc_code":"JIOP0000001"}
+2025-10-05 06:32:34 - Response: {"signType":null,"sign":null,"respCode":"FAIL","mchId":null,"merTransferId":null,"transferAmount":null,"applyDate":null,"tradeNo":null,"tradeResult":null,"errorMsg":"MER_IP_ILLEGE"}
+2025-10-05 06:32:34 - Transaction failed: MER_IP_ILLEGE
+2025-10-05 06:39:34 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEW9E2E83E23","account_number":"003521713029643","amount":"180.00","account_name":"Pritam roy","ifsc_code":"JIOP0000001"}
+2025-10-05 06:39:34 - Response: {"signType":null,"sign":null,"respCode":"FAIL","mchId":null,"merTransferId":null,"transferAmount":null,"applyDate":null,"tradeNo":null,"tradeResult":null,"errorMsg":"MER_IP_ILLEGE"}
+2025-10-05 06:39:34 - Transaction failed: MER_IP_ILLEGE
+2025-10-05 07:31:12 - POST Data: {"_token":"ftsgX9fHQvaG04YUOB3Pf8MPcG9vrir2GN4fYsBd","trx":"QEW9E2E83E23","account_number":"003521713029643","amount":"180.00","account_name":"Pritam roy","ifsc_code":"JIOP0000001"}
+2025-10-05 07:31:12 - Response: {"signType":null,"sign":null,"respCode":"FAIL","mchId":null,"merTransferId":null,"transferAmount":null,"applyDate":null,"tradeNo":null,"tradeResult":null,"errorMsg":"MER_IP_ILLEGE"}
+2025-10-05 07:31:12 - Transaction failed: MER_IP_ILLEGE
