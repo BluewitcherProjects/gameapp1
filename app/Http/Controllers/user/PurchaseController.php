@@ -25,6 +25,11 @@ public function purchaseConfirmation($id)
 {
     $package = Package::find($id);
     $user = Auth::user();
+    
+    // Debug: Log authentication status
+    \Log::info('Purchase confirmation request - User: ' . ($user ? $user->id : 'null') . ', Package: ' . $id);
+    \Log::info('Request referrer: ' . request()->headers->get('referer'));
+    \Log::info('Current URL: ' . url()->current());
 
     session()->put('buy', true);
 
@@ -123,6 +128,7 @@ public function purchaseConfirmation($id)
         }
 
         session()->flash('message', 'Package purchased successfully');
+        \Log::info('Purchase successful, redirecting back to: ' . url()->previous());
         return redirect()->back();
     } else {
         session()->flash('message', 'Insufficient balance');

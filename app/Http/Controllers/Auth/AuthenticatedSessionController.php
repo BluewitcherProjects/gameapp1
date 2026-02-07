@@ -45,12 +45,14 @@ class AuthenticatedSessionController extends Controller
         //Check user ban or unban
         if ($user->ban_unban == 'ban')
         {
-            return response()->json(['status'=> false, 'message'=> 'Your account has been']);
+            return response()->json(['status'=> false, 'message'=> 'Your account has been banned']);
         }
 
         if ($user){
             if (Hash::check($request->password, $user->password)){
                 Auth::login($user);
+                // Debug: Log successful login
+                \Log::info('User logged in successfully: ' . $user->phone . ' (ID: ' . $user->id . ')');
                 return response()->json(['status'=> true, 'message'=> 'Successful']);
             }else{
                 return response()->json(['status'=> false, 'message'=> 'Incorrect Password type']);
