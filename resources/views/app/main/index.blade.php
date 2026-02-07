@@ -231,7 +231,7 @@
                 </div>
                 @endforeach
 
-                @foreach(\App\Models\Package::where('type','normal')->get() as $element)
+                @foreach(\App\Models\Package::where('type','offer')->get() as $element)
                 <div x-show="activeTab === 'offer'" style="display: none;" x-transition
                     class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-red-500/40 transition-all duration-300 shadow-lg hover:shadow-red-500/20 relative group">
                     <div class="absolute top-3 right-3 z-10">

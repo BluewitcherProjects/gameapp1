@@ -100,6 +100,7 @@
                                             <option value="">--Select Type--</option>
                                             <option value="normal" {{ isset($data) && $data->type == 'normal' ? 'selected' : '' }}>Normal</option>
                                             <option value="welfare" {{ isset($data) && $data->type == 'welfare' ? 'selected' : '' }}>Welfare</option>
+                                            <option value="offer" {{ isset($data) && $data->type == 'offer' ? 'selected' : '' }}>Offer</option>
                                         </select>
                                         <div class="valid-feedback">
                                             <i class="bx bx-radio-circle"></i> Note: This field is required

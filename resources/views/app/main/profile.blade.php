@@ -11,7 +11,7 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-primary-midnight to-primary-teal opacity-50"></div>
                 <div class="relative z-10 p-6 flex items-center space-x-4">
                     <div class="w-16 h-16 rounded-full bg-white/10 p-1 border border-white/20">
-                        <img src="{{ asset('pic/head1.jpg') }}" class="w-full h-full rounded-full object-cover"
+                        <img src="{{ asset('pic/head.jpg') }}" class="w-full h-full rounded-full object-cover"
                             alt="Avatar">
                     </div>
                     <div>

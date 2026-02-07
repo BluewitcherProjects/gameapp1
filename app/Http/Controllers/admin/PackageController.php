@@ -37,7 +37,7 @@ class PackageController extends Controller
         'price'=> 'required|numeric',
         'validity'=> 'required|numeric',
         'commission_with_avg_amount'=> 'required|numeric',
-        'type' => 'required|in:normal,welfare',  
+        'type' => 'required|in:normal,welfare,offer',  
         'buy_limit' => 'required|numeric|min:1',
         'presale' => 'required|in:yes,no',
     ]);
