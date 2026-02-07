@@ -145,16 +145,14 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label>Amount</label>
-                                                            <input type="number" name="balance" class="form-control" placeholder="Enter amount to add" required min="0" step="0.01">
-                                                            <input type="hidden" name="user_id" value="{{$row->id}}">
+                                                            <input type="number" id="balanceAmount{{$row->id}}" class="form-control" placeholder="Enter amount to add" required min="0" step="0.01">
                                                         </div>
                                                     </div>
 
                                                     <!-- Modal footer -->
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Add Balance</button>
-                                                        <button type="button" class="btn btn-danger"
-                                                            data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary" onclick="submitBalance({{$row->id}}, document.querySelector('#balanceAmount{{$row->id}}').value)">Add Balance</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
                                                 </div>
@@ -298,20 +296,78 @@
 
     // Handle balance form submission
     document.addEventListener('DOMContentLoaded', function() {
-        const balanceForms = document.querySelectorAll('form[action="{{route('admin.user.balance.add')}}"]');
-        balanceForms.forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const submitBtn = form.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                
-                // Show loading state
-                submitBtn.innerHTML = 'Processing...';
-                submitBtn.disabled = true;
-                
-                // Add visual feedback
-                document.querySelector('.mes').innerHTML = '<div class="alert alert-info">Processing balance addition...</div>';
-            });
+        // Handle form submissions with better error handling
+        document.addEventListener('submit', function(e) {
+            if (e.target.action && e.target.action.includes('balance/add')) {
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    // Show loading state
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = 'Processing...';
+                    submitBtn.disabled = true;
+                    
+                    // Add visual feedback
+                    const messageDiv = document.querySelector('.mes');
+                    if (messageDiv) {
+                        messageDiv.innerHTML = '<div class="alert alert-info">Processing balance addition...</div>';
+                    }
+                    
+                    // Re-enable button if form fails to submit
+                    setTimeout(() => {
+                        if (submitBtn.disabled) {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                            if (messageDiv) {
+                                messageDiv.innerHTML = '<div class="alert alert-warning">Form submission timed out. Please try again.</div>';
+                            }
+                        }
+                    }, 10000); // 10 second timeout
+                }
+            }
         });
+        
+        // Alternative method: Direct form submission via JavaScript
+        window.submitBalance = function(userId, amount) {
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            // Show confirmation
+            if (!confirm(`Are you sure you want to add ${amount} to user ${userId}?`)) {
+                return;
+            }
+            
+            // Create and submit form programmatically
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = '{{route('admin.user.balance.add')}}';
+            
+            // Add CSRF token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+            
+            // Add data fields
+            const userIdInput = document.createElement('input');
+            userIdInput.type = 'hidden';
+            userIdInput.name = 'user_id';
+            userIdInput.value = userId;
+            form.appendChild(userIdInput);
+            
+            const balanceInput = document.createElement('input');
+            balanceInput.type = 'hidden';
+            balanceInput.name = 'balance';
+            balanceInput.value = amount;
+            form.appendChild(balanceInput);
+            
+            // Add form to document and submit
+            document.body.appendChild(form);
+            form.submit();
+        };
     });
 </script>
 @endsection
