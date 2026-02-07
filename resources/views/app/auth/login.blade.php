@@ -85,14 +85,14 @@
                 class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg shadow-accent-gold/20 text-sm font-bold text-white bg-linear-to-r from-accent-gold to-orange-600 hover:from-accent-gold hover:to-orange-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95 transition-all duration-300 uppercase tracking-wider relative overflow-hidden group">
                 <span
                     class="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                <span x-show="!loading" class="flex items-center">
+                <span x-show="!loading" class="flex items-center relative z-10">
                     LOGIN
                     <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                 </span>
-                <span x-show="loading" class="flex items-center" style="display: none;">
+                <span x-show="loading" class="flex items-center relative z-10" style="display: none;">
                     <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -187,19 +187,39 @@
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify(this.formDat                           })
-                        .then                        e.json())
-                                  data => {
-                                        ding = false;
-                                              s === true) {
-                                window.dispatchEvent(new CustomEvent('notify', { detail: { message: data.message |                                 'success' } }));
-                                     etTimeout(() => {
-                                                               "{{ url('d                                                                                             } else {
-                                window.dispatchEvent(new CustomEvent('notify', { detail:                             |                        pe:                                                                              })
-                                       r => {
+                        body: JSON.stringify(this.formData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
                             this.loading = false;
-                            window.dispatchEvent(new CustomEvent('notify                            'An error occurred. Please try a                        ' } }));
-                            console.e(
+                            if (data.status === true) {
+                                window.dispatchEvent(new CustomEvent('notify', {
+                                    detail: {
+                                        message: data.message,
+                                        type: 'success'
+                                    }
+                                }));
+                                setTimeout(() => {
+                                    window.location.href = "{{ route('dashboard') }}";
+                                }, 1000);
+                            } else {
+                                window.dispatchEvent(new CustomEvent('notify', {
+                                    detail: {
+                                        message: data.message,
+                                        type: 'error'
+                                    }
+                                }));
+                            }
+                        })
+                        .catch(error => {
+                            this.loading = false;
+                            window.dispatchEvent(new CustomEvent('notify', {
+                                detail: {
+                                    message: 'An error occurred. Please try again.',
+                                    type: 'error'
+                                }
+                            }));
+                            console.error('Error:', error);
                         });
                 }
             }
