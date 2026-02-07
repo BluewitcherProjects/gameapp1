@@ -2,7 +2,7 @@
     <div class="space-y-6 md:space-y-8" x-data="{ activeTab: 'normal' }">
 
         <!-- Hero / Slider -->
-        <div class="relative bg-primary-midnight pb-6 md:pb-12 rounded-b-[3rem] shadow-2xl border-b border-white/5 overflow-hidden">
+        <div class="relative bg-primary-midnight pt-2 pb-8 md:pb-10 rounded-b-[3rem] shadow-2xl border-b border-white/5 overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent-cyan/10 rounded-full blur-[100px]"></div>
                 <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent-gold/10 rounded-full blur-[100px]"></div>
@@ -48,8 +48,8 @@
                     @endif
                 </div>
 
-                <!-- Quick Actions (Floating Overlap) -->
-                <div class="relative -mt-10 mx-auto max-w-6xl">
+                <!-- Quick Actions (below slider, no overlap) -->
+                <div class="relative mt-6 md:mt-8 mx-auto max-w-6xl">
                     <div
                         class="bg-primary-midnight/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl mx-2 sm:mx-0">
                         <div class="grid grid-cols-5 gap-2 sm:gap-6">
@@ -125,9 +125,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
                 <div x-show="activeTab === 'normal'" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-cyan/40 transition-all duration-300">
-                    <div class="flex flex-row p-4 gap-4 min-h-[180px]">
-                        <!-- Left: big image -->
-                        <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden">
+                    <div class="flex flex-row p-4 gap-4 min-h-[160px] sm:min-h-[200px]">
+                        <!-- Left: image fits card height -->
+                        <div class="flex-shrink-0 w-24 sm:w-32 h-full min-h-[120px] sm:min-h-[168px] rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden self-stretch">
                             <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain">
                         </div>
                         <!-- Right: name, horizontal stats, button -->
@@ -162,8 +162,8 @@
 
                 @foreach(\App\Models\Package::where('type','welfare')->get() as $element)
                 <div x-show="activeTab === 'welfare'" style="display: none;" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-gold/40 transition-all duration-300">
-                    <div class="flex flex-row p-4 gap-4 min-h-[180px]">
-                        <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden">
+                    <div class="flex flex-row p-4 gap-4 min-h-[160px] sm:min-h-[200px]">
+                        <div class="flex-shrink-0 w-24 sm:w-32 h-full min-h-[120px] sm:min-h-[168px] rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden self-stretch">
                             <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain">
                         </div>
                         <div class="flex-1 min-w-0 flex flex-col justify-between">
