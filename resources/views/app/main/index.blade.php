@@ -1,3 +1,4 @@
+{{-- Home: slider visible + plans list redesigned --}}
 <x-app-layout>
     <div class="space-y-4 md:space-y-8" x-data="{ activeTab: 'normal' }">
 
