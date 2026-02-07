@@ -64,3 +64,6 @@
 [2026-02-07 13:32:51] HXPayment Request Data: {"amount":580,"email":"customer@example.com","merchantLogin":"hx633","name":"Customer","orderCode":"HX17704711703508","phone":"919999999999","remark":"Order HX17704711703508","sign":"428be5599a34fb4a44484be0ba10e1ad"}
 [2026-02-07 13:32:51] Sign String: amount=580&email=customer@example.com&merchantLogin=hx633&name=Customer&orderCode=HX17704711703508&phone=919999999999&remark=Order HX17704711703508&key=qTSuAE3rntzo94O1n1bL
 [2026-02-07 13:32:51] API Response (HTTP 200): {"platformOrderCode":"C20260207190250149065","paymentUrl":"https://pg.finalpay.in/#/?orderNo=LI2602073811e09005814c08"}
+[2026-02-07 14:00:56] === Deposit Request Started ===
+[2026-02-07 14:00:56] POST Data: {"amount":"100","method":"hxpayment"}
+[2026-02-07 14:00:56] Query executed. Found gateway: HXPayment
