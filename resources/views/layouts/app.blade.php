@@ -32,8 +32,8 @@
         </header>
         @endif --}}
 
-        <!-- Page Content - full width block so slider/content stay below header, above bottom nav -->
-        <main class="flex-grow w-full block pb-20 overflow-x-hidden">
+        <!-- Page Content -->
+        <main class="flex-grow pb-20">
             {{ $slot }}
         </main>
 

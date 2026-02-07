@@ -1,19 +1,13 @@
-{{-- Home: slider full-width below nav; plans horizontal layout --}}
 <x-app-layout>
-    <div class="w-full block min-h-screen pb-20" x-data="{ activeTab: 'normal' }">
-        <!-- Hero Section / Carousel - full width, below any header, above bottom nav -->
-        <section class="w-full block relative bg-primary-midnight pb-6 md:pb-12 rounded-b-[3rem] shadow-2xl border-b border-white/5 overflow-hidden">
-            <!-- Abstract Background Elements -->
-            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div
-                    class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent-cyan/10 rounded-full blur-[100px]">
-                </div>
-                <div
-                    class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent-gold/10 rounded-full blur-[100px]">
-                </div>
-            </div>
+    <div class="space-y-6 md:space-y-8" x-data="{ activeTab: 'normal' }">
 
-            <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10">
+        <!-- Hero / Slider -->
+        <div class="relative bg-primary-midnight pb-6 md:pb-12 rounded-b-[3rem] shadow-2xl border-b border-white/5 overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent-cyan/10 rounded-full blur-[100px]"></div>
+                <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent-gold/10 rounded-full blur-[100px]"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10">
                 <!-- Carousel -->
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
                     <div class="carousel relative w-full h-64 sm:h-80 md:h-96">
@@ -111,139 +105,95 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Investment Plans Section -->
-        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-
-            <div class="flex flex-col items-center mb-6 md:mb-10">
-                <h2
-                    class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-metallic-silver mb-2">
-                    Investment Plans
-                </h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-accent-cyan to-accent-gold rounded-full mb-6"></div>
-
-                <!-- Premium Tabs -->
-                <div
-                    class="bg-white/5 backdrop-blur-md p-1.5 rounded-full border border-white/10 inline-flex shadow-inner">
+        <!-- Investment Plans -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Investment Plans</h2>
+                <div class="w-20 h-0.5 bg-gradient-to-r from-accent-cyan to-accent-gold rounded-full mx-auto mb-6"></div>
+                <div class="bg-white/5 backdrop-blur-md p-1.5 rounded-full border border-white/10 inline-flex">
                     <button @click="activeTab = 'normal'"
-                        :class="{ 'bg-gradient-to-r from-accent-cyan to-primary-teal text-white shadow-lg': activeTab === 'normal', 'text-metallic-silver hover:text-white': activeTab !== 'normal' }"
-                        class="px-8 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        PREMIUM
-                    </button>
+                        :class="activeTab === 'normal' ? 'bg-gradient-to-r from-accent-cyan to-primary-teal text-white shadow-lg' : 'text-gray-400 hover:text-white'"
+                        class="px-6 py-2 rounded-full text-sm font-bold transition-all duration-300">PREMIUM</button>
                     <button @click="activeTab = 'welfare'"
-                        :class="{ 'bg-gradient-to-r from-accent-gold to-orange-600 text-white shadow-lg': activeTab === 'welfare', 'text-metallic-silver hover:text-white': activeTab !== 'welfare' }"
-                        class="px-8 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 flex items-center ml-1">
-                        <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                        </svg>
-                        WELFARE
-                    </button>
+                        :class="activeTab === 'welfare' ? 'bg-gradient-to-r from-accent-gold to-orange-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'"
+                        class="px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ml-1">WELFARE</button>
                 </div>
             </div>
 
-            <!-- Plans List: horizontal layout, one row per plan -->
-            <div class="space-y-4">
-                <!-- Normal Plans -->
-                <div x-show="activeTab === 'normal'" x-transition:enter="transition ease-out duration-500"
-                    x-transition:enter-start="opacity-0 transform translate-y-4"
-                    x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
-                    <div class="relative group w-full">
-                        <div class="relative flex flex-wrap items-center w-full gap-3 sm:gap-6 p-4 sm:p-5 rounded-2xl bg-[#0f172a]/90 backdrop-blur-sm border border-white/10 hover:border-accent-cyan/40 hover:shadow-lg hover:shadow-accent-cyan/10 transition-all duration-300">
-                            <div class="h-1 absolute top-0 left-0 right-0 rounded-t-2xl bg-gradient-to-r from-accent-cyan to-primary-teal"></div>
-                            <!-- Image -->
-                            <div class="flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center overflow-hidden">
-                                <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                <div x-show="activeTab === 'normal'" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-cyan/40 transition-all duration-300">
+                    <div class="p-5">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center flex-shrink-0">
+                                <img src="{{ asset($element->photo) }}" alt="" class="w-10 h-10 object-contain">
                             </div>
-                            <!-- Name + validity -->
-                            <div class="flex-shrink-0 min-w-0 flex flex-col justify-center order-first sm:order-none flex-1 sm:flex-initial">
-                                <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
-                                <span class="inline-flex items-center w-fit mt-0.5 px-2 py-0.5 rounded-md bg-accent-cyan/15 text-accent-cyan text-xs font-semibold border border-accent-cyan/20">{{ $element->validity }} Days</span>
-                            </div>
-                            <!-- Stats: Invest | Daily | Total - horizontal -->
-                            <div class="flex flex-row items-center justify-center sm:justify-start gap-2 sm:gap-4 flex-1 w-full sm:w-auto min-w-0 basis-full sm:basis-auto">
-                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
-                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Invest</span>
-                                    <span class="text-white font-bold text-xs sm:text-sm">₹{{ number_format($element->price, 0) }}</span>
-                                </div>
-                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
-                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Daily</span>
-                                    <span class="text-accent-cyan font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</span>
-                                </div>
-                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
-                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Total</span>
-                                    <span class="text-accent-gold font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</span>
-                                </div>
-                            </div>
-                            <!-- CTA -->
-                            <div class="flex-shrink-0 w-full sm:w-auto sm:min-w-[130px]">
-                                @if($element->presale == 'yes')
-                                <button disabled class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-white/5 text-gray-500 font-bold text-xs sm:text-sm tracking-wide border border-white/5 cursor-not-allowed">
-                                    Pre-Sale
-                                </button>
-                                @else
-                                <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-accent-cyan/20 border border-accent-cyan/20 hover:shadow-accent-cyan/30 hover:opacity-95 transition-all duration-300">
-                                    Invest Now
-                                </button>
-                                @endif
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-white font-bold text-lg truncate">{{ $element->name }}</h3>
+                                <span class="text-accent-cyan text-xs font-medium">{{ $element->validity }} Days</span>
                             </div>
                         </div>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
+                                <p class="text-gray-400 text-xs">Invest</p>
+                                <p class="text-white font-bold text-sm">₹{{ number_format($element->price, 0) }}</p>
+                            </div>
+                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
+                                <p class="text-gray-400 text-xs">Daily</p>
+                                <p class="text-accent-cyan font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
+                            </div>
+                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
+                                <p class="text-gray-400 text-xs">Total</p>
+                                <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
+                            </div>
+                        </div>
+                        @if($element->presale == 'yes')
+                        <button disabled class="w-full py-3 rounded-xl bg-white/5 text-gray-500 text-sm font-bold border border-white/5 cursor-not-allowed">Pre-Sale</button>
+                        @else
+                        <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#005f73] to-accent-cyan text-white text-sm font-bold hover:opacity-95 transition-opacity">Invest Now</button>
+                        @endif
                     </div>
-                @endforeach
                 </div>
+                @endforeach
 
-                <!-- Welfare Plans -->
-                <div x-show="activeTab === 'welfare'" style="display: none;"
-                    x-transition:enter="transition ease-out duration-500"
-                    x-transition:enter-start="opacity-0 transform translate-y-4"
-                    x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-4">
                 @foreach(\App\Models\Package::where('type','welfare')->get() as $element)
-                    <div class="relative group w-full">
-                        <div class="relative flex flex-wrap items-center w-full gap-3 sm:gap-6 p-4 sm:p-5 rounded-2xl bg-[#0f172a]/90 backdrop-blur-sm border border-white/10 hover:border-accent-gold/40 hover:shadow-lg hover:shadow-accent-gold/10 transition-all duration-300">
-                            <div class="h-1 absolute top-0 left-0 right-0 rounded-t-2xl bg-gradient-to-r from-accent-gold to-orange-600"></div>
-                            <div class="flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center overflow-hidden">
-                                <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                <div x-show="activeTab === 'welfare'" style="display: none;" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-gold/40 transition-all duration-300">
+                    <div class="p-5">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center flex-shrink-0">
+                                <img src="{{ asset($element->photo) }}" alt="" class="w-10 h-10 object-contain">
                             </div>
-                            <div class="flex-shrink-0 min-w-0 flex flex-col justify-center order-first sm:order-none flex-1 sm:flex-initial">
-                                <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
-                                <span class="inline-flex items-center w-fit mt-0.5 px-2 py-0.5 rounded-md bg-accent-gold/15 text-accent-gold text-xs font-semibold border border-accent-gold/20">{{ $element->validity }} Days</span>
-                            </div>
-                            <div class="flex flex-row items-center justify-center sm:justify-start gap-2 sm:gap-4 flex-1 w-full sm:w-auto min-w-0 basis-full sm:basis-auto">
-                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
-                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Invest</span>
-                                    <span class="text-white font-bold text-xs sm:text-sm">₹{{ number_format($element->price, 0) }}</span>
-                                </div>
-                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
-                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Daily</span>
-                                    <span class="text-accent-gold font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</span>
-                                </div>
-                                <div class="flex flex-col items-center justify-center rounded-lg bg-white/5 border border-white/5 px-2.5 py-1.5 sm:px-3 sm:py-2 min-w-[60px] sm:min-w-[80px]">
-                                    <span class="text-[10px] uppercase tracking-wider text-gray-400">Total</span>
-                                    <span class="text-accent-gold font-bold text-xs sm:text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</span>
-                                </div>
-                            </div>
-                            <div class="flex-shrink-0 w-full sm:w-auto sm:min-w-[130px]">
-                                @if($element->presale == 'yes')
-                                <button disabled class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-white/5 text-gray-500 font-bold text-xs sm:text-sm tracking-wide border border-white/5 cursor-not-allowed">
-                                    Pre-Sale
-                                </button>
-                                @else
-                                <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-accent-gold/20 border border-accent-gold/20 hover:shadow-accent-gold/30 hover:opacity-95 transition-all duration-300">
-                                    Invest Now
-                                </button>
-                                @endif
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-white font-bold text-lg truncate">{{ $element->name }}</h3>
+                                <span class="text-accent-gold text-xs font-medium">{{ $element->validity }} Days</span>
                             </div>
                         </div>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
+                                <p class="text-gray-400 text-xs">Invest</p>
+                                <p class="text-white font-bold text-sm">₹{{ number_format($element->price, 0) }}</p>
+                            </div>
+                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
+                                <p class="text-gray-400 text-xs">Daily</p>
+                                <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
+                            </div>
+                            <div class="bg-white/5 rounded-lg px-3 py-2 text-center">
+                                <p class="text-gray-400 text-xs">Total</p>
+                                <p class="text-accent-gold font-bold text-sm">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
+                            </div>
+                        </div>
+                        @if($element->presale == 'yes')
+                        <button disabled class="w-full py-3 rounded-xl bg-white/5 text-gray-500 text-sm font-bold border border-white/5 cursor-not-allowed">Pre-Sale</button>
+                        @else
+                        <button @click="openPurchaseModal({{ $element->id }})" class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white text-sm font-bold hover:opacity-95 transition-opacity">Invest Now</button>
+                        @endif
                     </div>
-                @endforeach
                 </div>
+                @endforeach
             </div>
+        </div>
     </div>
 
     <!-- Purchase Confirmation Modal -->
