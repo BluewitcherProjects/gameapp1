@@ -139,9 +139,8 @@
                 </div>
             </div>
 
-            <!-- Plans Horizontal Scroll Container -->
-            <div class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scrollbar-hide"
-                style="-webkit-overflow-scrolling: touch;">
+            <!-- Plans Grid Container -->
+            <div class="grid grid-cols-2 gap-3 pb-6">
 
                 <!-- Normal Plans -->
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
@@ -160,76 +159,65 @@
 
                         <!-- Compact Header with Plan Name & Validity -->
                         <div
-                            class="relative bg-gradient-to-r from-accent-cyan/10 to-primary-teal/10 px-5 py-4 border-b border-white/5">
+                            class="relative bg-gradient-to-r from-accent-cyan/10 to-primary-teal/10 px-3 py-2 border-b border-white/5">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-white font-bold text-lg">{{ $element->name ?? 'Premium Plan' }}</h3>
+                                <h3 class="text-white font-bold text-xs truncate">{{ $element->name ?? 'Premium Plan' }}
+                                </h3>
                                 <span
-                                    class="px-3 py-1 rounded-lg bg-accent-gold/20 border border-accent-gold/30 text-accent-gold text-xs font-bold">
+                                    class="px-2 py-0.5 rounded-md bg-accent-gold/20 border border-accent-gold/30 text-accent-gold text-[10px] font-bold">
                                     {{ $element->validity }} Days
                                 </span>
                             </div>
                         </div>
 
                         <!-- Compact Image Section -->
-                        <div class="relative h-32 overflow-hidden">
+                        <div class="relative h-24 overflow-hidden">
                             <img src="{{ asset($element->photo) }}"
                                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-primary-midnight/80 to-transparent">
                             </div>
+                            <!-- Investment Amount Overlay -->
+                            <div class="absolute bottom-2 left-3 right-3">
+                                <div
+                                    class="backdrop-blur-md bg-black/40 rounded-lg p-1.5 border border-white/10 text-center">
+                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-0.5">Price
+                                    </p>
+                                    <p class="text-lg font-bold text-accent-cyan leading-none">₹{{
+                                        number_format($element->price, 0) }}</p>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Card Body -->
-                        <div class="p-5 flex-1 flex flex-col space-y-4">
-
-                            <!-- Investment Amount - Primary Focus -->
-                            <div
-                                class="text-center py-4 bg-gradient-to-br from-accent-cyan/10 to-transparent rounded-xl border border-accent-cyan/20">
-                                <p class="text-xs uppercase tracking-wider text-metallic-silver mb-1">Investment Amount
-                                </p>
-                                <p class="text-3xl font-bold text-accent-cyan">₹{{ number_format($element->price, 0) }}
-                                </p>
-                            </div>
+                        <div class="p-3 flex-1 flex flex-col space-y-2">
 
                             <!-- Stats Grid -->
-                            <div class="grid grid-cols-2 gap-3">
+                            <div class="grid grid-cols-2 gap-2">
                                 <div
-                                    class="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-accent-cyan/20 transition-colors">
-                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Daily
-                                        Income</p>
-                                    <p class="text-white font-bold text-sm">₹{{
+                                    class="bg-white/5 rounded-lg p-2 border border-white/5 hover:border-accent-cyan/20 transition-colors">
+                                    <p class="text-[9px] uppercase tracking-wider text-metallic-silver mb-0.5">Daily</p>
+                                    <p class="text-white font-bold text-xs">₹{{
                                         number_format($element->commission_with_avg_amount / $element->validity, 0) }}
                                     </p>
                                 </div>
                                 <div
-                                    class="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-accent-gold/20 transition-colors">
-                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Total
-                                        Return</p>
-                                    <p class="text-accent-gold font-bold text-sm">₹{{
+                                    class="bg-white/5 rounded-lg p-2 border border-white/5 hover:border-accent-gold/20 transition-colors">
+                                    <p class="text-[9px] uppercase tracking-wider text-metallic-silver mb-0.5">Total</p>
+                                    <p class="text-accent-gold font-bold text-xs">₹{{
                                         number_format($element->commission_with_avg_amount, 0) }}</p>
                                 </div>
                             </div>
 
-                            <!-- ROI Badge -->
-                            <div class="flex items-center justify-center py-2">
-                                <div class="px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/30">
-                                    <span class="text-[10px] uppercase tracking-wider text-emerald-400 mr-2">ROI</span>
-                                    <span class="text-emerald-400 font-bold text-base">
-                                        {{ number_format((($element->commission_with_avg_amount - $element->price) /
-                                        $element->price) * 100, 1) }}%
-                                    </span>
-                                </div>
-                            </div>
-
                             <!-- Action Button -->
-                            <div class="mt-auto pt-2">
+                            <div class="mt-auto pt-1">
                                 @if($element->presale == 'yes')
                                 <button disabled
-                                    class="w-full py-3 rounded-xl bg-gray-700/50 text-gray-400 font-semibold text-sm tracking-wide uppercase border border-white/5 cursor-not-allowed">
-                                    Pre-Sale Active
+                                    class="w-full py-2 rounded-lg bg-gray-700/50 text-gray-400 font-semibold text-[10px] tracking-wide uppercase border border-white/5 cursor-not-allowed">
+                                    Pre-Sale
                                 </button>
                                 @else
                                 <button @click="openPurchaseModal({{$element->id}})"
-                                    class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-cyan to-primary-teal text-white font-semibold text-sm tracking-wide uppercase shadow-lg shadow-accent-cyan/25 border border-white/10 hover:shadow-accent-cyan/40 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group/btn">
+                                    class="w-full py-2 rounded-lg bg-gradient-to-r from-accent-cyan to-primary-teal text-white font-semibold text-[10px] tracking-wide uppercase shadow-lg shadow-accent-cyan/25 border border-white/10 hover:shadow-accent-cyan/40 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group/btn">
                                     <span
                                         class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
                                     <span class="relative">Invest Now</span>
@@ -259,76 +247,65 @@
 
                         <!-- Compact Header with Plan Name & Validity -->
                         <div
-                            class="relative bg-gradient-to-r from-accent-gold/10 to-orange-600/10 px-5 py-4 border-b border-white/5">
+                            class="relative bg-gradient-to-r from-accent-gold/10 to-orange-600/10 px-3 py-2 border-b border-white/5">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-white font-bold text-lg">{{ $element->name ?? 'Welfare Plan' }}</h3>
+                                <h3 class="text-white font-bold text-xs truncate">{{ $element->name ?? 'Welfare Plan' }}
+                                </h3>
                                 <span
-                                    class="px-3 py-1 rounded-lg bg-accent-gold/20 border border-accent-gold/30 text-accent-gold text-xs font-bold">
+                                    class="px-2 py-0.5 rounded-md bg-accent-gold/20 border border-accent-gold/30 text-accent-gold text-[10px] font-bold">
                                     {{ $element->validity }} Days
                                 </span>
                             </div>
                         </div>
 
                         <!-- Compact Image Section -->
-                        <div class="relative h-32 overflow-hidden">
+                        <div class="relative h-24 overflow-hidden">
                             <img src="{{ asset($element->photo) }}"
                                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-primary-midnight/80 to-transparent">
                             </div>
+                            <!-- Investment Amount Overlay -->
+                            <div class="absolute bottom-2 left-3 right-3">
+                                <div
+                                    class="backdrop-blur-md bg-black/40 rounded-lg p-1.5 border border-white/10 text-center">
+                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-0.5">Price
+                                    </p>
+                                    <p class="text-lg font-bold text-accent-gold leading-none">₹{{
+                                        number_format($element->price, 0) }}</p>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Card Body -->
-                        <div class="p-5 flex-1 flex flex-col space-y-4">
-
-                            <!-- Investment Amount - Primary Focus -->
-                            <div
-                                class="text-center py-4 bg-gradient-to-br from-accent-gold/10 to-transparent rounded-xl border border-accent-gold/20">
-                                <p class="text-xs uppercase tracking-wider text-metallic-silver mb-1">Investment Amount
-                                </p>
-                                <p class="text-3xl font-bold text-accent-gold">₹{{ number_format($element->price, 0) }}
-                                </p>
-                            </div>
+                        <div class="p-3 flex-1 flex flex-col space-y-2">
 
                             <!-- Stats Grid -->
-                            <div class="grid grid-cols-2 gap-3">
+                            <div class="grid grid-cols-2 gap-2">
                                 <div
-                                    class="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-accent-gold/20 transition-colors">
-                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Daily
-                                        Income</p>
-                                    <p class="text-white font-bold text-sm">₹{{
+                                    class="bg-white/5 rounded-lg p-2 border border-white/5 hover:border-accent-gold/20 transition-colors">
+                                    <p class="text-[9px] uppercase tracking-wider text-metallic-silver mb-0.5">Daily</p>
+                                    <p class="text-white font-bold text-xs">₹{{
                                         number_format($element->commission_with_avg_amount / $element->validity, 0) }}
                                     </p>
                                 </div>
                                 <div
-                                    class="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-accent-gold/20 transition-colors">
-                                    <p class="text-[10px] uppercase tracking-wider text-metallic-silver mb-1">Total
-                                        Return</p>
-                                    <p class="text-accent-gold font-bold text-sm">₹{{
+                                    class="bg-white/5 rounded-lg p-2 border border-white/5 hover:border-accent-gold/20 transition-colors">
+                                    <p class="text-[9px] uppercase tracking-wider text-metallic-silver mb-0.5">Total</p>
+                                    <p class="text-accent-gold font-bold text-xs">₹{{
                                         number_format($element->commission_with_avg_amount, 0) }}</p>
                                 </div>
                             </div>
 
-                            <!-- ROI Badge -->
-                            <div class="flex items-center justify-center py-2">
-                                <div class="px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/30">
-                                    <span class="text-[10px] uppercase tracking-wider text-emerald-400 mr-2">ROI</span>
-                                    <span class="text-emerald-400 font-bold text-base">
-                                        {{ number_format((($element->commission_with_avg_amount - $element->price) /
-                                        $element->price) * 100, 1) }}%
-                                    </span>
-                                </div>
-                            </div>
-
                             <!-- Action Button -->
-                            <div class="mt-auto pt-2">
+                            <div class="mt-auto pt-1">
                                 @if($element->presale == 'yes')
                                 <button disabled
-                                    class="w-full py-3 rounded-xl bg-gray-700/50 text-gray-400 font-semibold text-sm tracking-wide uppercase border border-white/5 cursor-not-allowed">
-                                    Pre-Sale Active
+                                    class="w-full py-2 rounded-lg bg-gray-700/50 text-gray-400 font-semibold text-[10px] tracking-wide uppercase border border-white/5 cursor-not-allowed">
+                                    Pre-Sale
                                 </button>
                                 @else
                                 <button @click="openPurchaseModal({{$element->id}})"
-                                    class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-gold to-orange-600 text-white font-semibold text-sm tracking-wide uppercase shadow-lg shadow-accent-gold/25 border border-white/10 hover:shadow-accent-gold/40 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group/btn">
+                                    class="w-full py-2 rounded-lg bg-gradient-to-r from-accent-gold to-orange-600 text-white font-semibold text-[10px] tracking-wide uppercase shadow-lg shadow-accent-gold/25 border border-white/10 hover:shadow-accent-gold/40 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group/btn">
                                     <span
                                         class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
                                     <span class="relative">Invest Now</span>
