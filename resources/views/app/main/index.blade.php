@@ -246,7 +246,7 @@
                     </div>
                 </div>
                 <div class="bg-black/20 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse border-t border-white/5">
-                    <button type="button" @click="window.location.href = '{{ url(" purchase/confirmation") }}/' + cid"
+                    <button type="button" @click="window.location.href = '{{ url('purchase/confirmation') }}/' + cid"
                         class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg shadow-accent-cyan/20 px-6 py-3 bg-gradient-to-r from-accent-cyan to-primary-teal text-base font-bold text-white hover:shadow-accent-cyan/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-cyan sm:ml-3 sm:w-auto sm:text-sm transition-all duration-300">
                         Confirm & Invest
                     </button>
