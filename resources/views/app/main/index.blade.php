@@ -61,8 +61,13 @@
                             <a href="{{ route('user.deposit') }}" class="flex flex-col items-center group text-center">
                                 <div
                                     class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-accent-cyan/20 to-primary-teal/20 border border-accent-cyan/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-accent-cyan/50 transition-all duration-300">
-                                    <img src="{{ asset('pic/icon/shiba.png') }}"
-                                        class="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md">
+                                    <svg class="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md text-accent-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="9" stroke-width="2" />
+                                        <circle cx="12" cy="12" r="5" stroke-width="1.5" />
+                                        <circle cx="12" cy="12" r="1.5" stroke-width="1" fill="currentColor" />
+                                        <path d="M12 3v2M18 12h-2M12 19v-2M6 12h2" stroke-width="1.5" />
+                                        <path d="M15.5 6.5L17 5M17 17l-1.5-1.5M6.5 8.5L5 7M7 17l-2-1.5" stroke-width="1.5" />
+                                    </svg>
                                 </div>
                                 <span
                                     class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Recharge</span>
