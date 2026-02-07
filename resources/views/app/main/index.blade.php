@@ -169,6 +169,14 @@
                             </div>
                         </div>
 
+                        <!-- Compact Image Section -->
+                        <div class="relative h-32 overflow-hidden">
+                            <img src="{{ asset($element->photo) }}"
+                                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary-midnight/80 to-transparent">
+                            </div>
+                        </div>
+
                         <!-- Card Body -->
                         <div class="p-5 flex-1 flex flex-col space-y-4">
 
@@ -468,6 +476,4 @@
                 currentItem = (currentItem + 1) % items.length;
                 items[currentItem].classList.remove('opacity-0');
             }, 6000); // 6 seconds for better readability
-        }
-    </script>
-</x-app-layout>
+        }ayout>
