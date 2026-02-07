@@ -261,7 +261,7 @@
             id: id,
             password: password
         }
-        fetch('{{route('admin.customer.change - password')}}',
+        fetch('{{route('admin.customer.change-password')}}',
             {
                 method: "POST",
                 body: JSON.stringify(data),
