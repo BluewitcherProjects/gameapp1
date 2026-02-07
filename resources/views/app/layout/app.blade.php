@@ -134,6 +134,42 @@
         </style>
         @stack('scripts')
         <script type="text/javascript">
+            // Global navigation throttling to prevent 429 errors
+            (function() {
+                let isNavigating = false;
+                let lastNavigationTime = 0;
+                const NAVIGATION_DELAY = 500; // 500ms delay between navigations
+
+                function throttledNavigate(url) {
+                    const now = Date.now();
+                    
+                    // Prevent navigation if already navigating or within delay period
+                    if (isNavigating || (now - lastNavigationTime) < NAVIGATION_DELAY) {
+                        console.log('Navigation throttled - please wait');
+                        return false;
+                    }
+
+                    isNavigating = true;
+                    lastNavigationTime = now;
+                    window.location.href = url;
+                    return true;
+                }
+
+                // Add global click handler for data-nav-url elements
+                document.addEventListener('click', function(e) {
+                    // Find the closest element with data-nav-url attribute
+                    const navElement = e.target.closest('[data-nav-url]');
+                    if (navElement) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const url = navElement.getAttribute('data-nav-url');
+                        if (url) {
+                            throttledNavigate(url);
+                        }
+                    }
+                }, true); // Use capture phase to catch events early
+            })();
+
             $("#accordion").on("hide.bs.collapse show.bs.collapse", e => {
                 $(e.target)
                     .prev()

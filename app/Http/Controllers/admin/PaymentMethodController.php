@@ -30,12 +30,12 @@ class PaymentMethodController extends Controller
     public function insert_or_update(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'channel'=> 'required',
-            'receiver'=> 'required',
+            'channel'=> 'nullable',
+            'receiver'=> 'nullable',
             'type'=> 'required',
-            'address'=> 'required',
-            'minimum'=> 'required|numeric',
-            'maximum'=> 'required|numeric',
+            'address'=> 'nullable',
+            'minimum'=> 'nullable|numeric',
+            'maximum'=> 'nullable|numeric',
         ]); 
 
 
@@ -44,7 +44,7 @@ class PaymentMethodController extends Controller
             $parameters = collect(json_decode($model->settings));
 
             foreach ($parameters as $key => $pram) {
-                $parameters[$key]->value = $request->global[$key];
+                $parameters[$key]->value = $request->global[$key] ?? '';
             }
 
             $model->settings = json_encode($parameters);
@@ -52,12 +52,12 @@ class PaymentMethodController extends Controller
         }else{
             $model = new PaymentMethod();
         }
-        $model->type = $request->type;
-        $model->channel = $request->channel;
-        $model->address = $request->address;
-        $model->minimum = $request->minimum;
-        $model->receiver = $request->receiver;
-        $model->maximum = $request->maximum;
+        $model->type = $request->type ?? 'wallet';
+        $model->channel = $request->channel ?? '';
+        $model->address = $request->address ?? '';
+        $model->minimum = $request->minimum ?? 0;
+        $model->receiver = $request->receiver ?? '';
+        $model->maximum = $request->maximum ?? 0;
 
         $model->save();
         return redirect()->route($this->route.'.index')->with('success', $request->id ? 'Payment method Updated Successful.' : 'Package Created Successful.');

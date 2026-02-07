@@ -10,13 +10,15 @@ class ProcessBankPayoutServices
     private $qepay;
     private $mapay;
     private $watchpay;
+    private $hxpayment;
 
     public function __construct(
         ManualBankPayoutServices $manual,
         GTRBankPayoutServices $gtr,
         QePayBankPayoutServices $qepay,
         MaPayBankPayoutServices $mapay,
-        WatchPayBankPayoutServices $watchpay
+        WatchPayBankPayoutServices $watchpay,
+        HXPaymentBankPayoutServices $hxpayment
     )
     {
         $this->manual = $manual;
@@ -24,6 +26,7 @@ class ProcessBankPayoutServices
         $this->qepay = $qepay;
         $this->mapay = $mapay;
         $this->watchpay = $watchpay;
+        $this->hxpayment = $hxpayment;
     }
 
     /**
@@ -59,7 +62,7 @@ class ProcessBankPayoutServices
             if($setting->auto_transfer) {
 
                 // Verify transfer Type
-                if(!in_array($setting->auto_transfer_default, ['mapay','qepay','watchpay'])) throw new \Exception("Payout not available at the moment");
+                if(!in_array($setting->auto_transfer_default, ['mapay','qepay','watchpay','hxpayment'])) throw new \Exception("Payout not available at the moment");
 
                 // qepay
                 if(in_array($setting->auto_transfer_default, ['qepay'])) {
@@ -74,6 +77,11 @@ class ProcessBankPayoutServices
                 // watchpay
                 if(in_array($setting->auto_transfer_default, ['watchpay'])) {
                 $payment = $this->watchpay->transfer($reference, $currency, $amount, $method, $bank_code, $bank_name, $account_number, $account_name, $narration);
+
+                }
+                // hxpayment
+                if(in_array($setting->auto_transfer_default, ['hxpayment'])) {
+                $payment = $this->hxpayment->transfer($reference, $currency, $amount, $method, $bank_code, $bank_name, $account_number, $account_name, $narration);
 
                 }
                 

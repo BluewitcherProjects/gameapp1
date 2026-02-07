@@ -309,6 +309,52 @@ class UserController extends Controller
         return view('app.main.deposit_history');
     }
 
+    public function payment_processing($order_id)
+    {
+        $deposit = Deposit::where('order_id', $order_id)->first();
+        
+        if (!$deposit) {
+            return redirect()->route('user.deposit')->with('error', 'Order not found');
+        }
+
+        return view('app.main.deposit.payment_processing', [
+            'order_id' => $order_id,
+            'amount' => $deposit->amount,
+            'gateway' => $deposit->method_name
+        ]);
+    }
+
+    public function check_payment_status($order_id)
+    {
+        $deposit = Deposit::where('order_id', $order_id)->first();
+        
+        if (!$deposit) {
+            return response()->json(['status' => 'not_found', 'message' => 'Order not found']);
+        }
+
+        if ($deposit->status === 'success') {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Payment confirmed',
+                'data' => [
+                    'order_id' => $deposit->order_id,
+                    'amount' => $deposit->amount,
+                    'status' => $deposit->status
+                ]
+            ]);
+        } elseif ($deposit->status === 'pending') {
+            return response()->json([
+                'status' => 'pending',
+                'message' => 'Payment is being processed'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Payment failed or rejected'
+            ]);
+        }
+    }
+
     public function commission()
     {
         return view('app.main.commission');

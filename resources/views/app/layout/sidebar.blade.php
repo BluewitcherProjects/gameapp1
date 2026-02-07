@@ -20,7 +20,7 @@
                                     <uni-view data-v-00e6788a="" class="app-name">{{env('APP_NAME')}}</uni-view>
                                     <uni-view data-v-00e6788a="">{{auth()->user()->phone}}(ID:{{auth()->user()->ref_id}})</uni-view>
                                     <uni-view data-v-00e6788a="" class="menu">
-                                        <uni-view data-v-00e6788a="" class="menu-item" onclick="window.location.href='{{route('user.deposit')}}'">
+                                        <uni-view data-v-00e6788a="" class="menu-item" data-nav-url='{{route('user.deposit')}}'>
                                             <uni-view data-v-00e6788a="" class="menu-img d-c-c">
                                                 <uni-image data-v-00e6788a="">
                                                     <div style="background-image: url({{asset('icons8-bank-94.png')}}; background-position: 0% 0%; background-size: 100% 100%; background-repeat: no-repeat;')}}"></div>
@@ -28,7 +28,7 @@
                                             </uni-view>
                                             <uni-text data-v-00e6788a=""><span>Recharge</span></uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="menu-item" onclick="window.location.href='{{route('user.withdraw')}}'">
+                                        <uni-view data-v-00e6788a="" class="menu-item" data-nav-url='{{route('user.withdraw')}}'>
                                             <uni-view data-v-00e6788a="" class="menu-img d-c-c">
                                                 <uni-image data-v-00e6788a="">
                                                     <div style="background-image: url({{asset('icons8-fund-94.png')}}; background-position: 0% 0%; background-size: 100% 100%; background-repeat: no-repeat;')}}"></div>
@@ -36,7 +36,7 @@
                                             </uni-view>
                                             <uni-text data-v-00e6788a=""><span>Withdraw</span></uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="menu-item" onclick="window.location.href='{{route('user.bank')}}'">
+                                        <uni-view data-v-00e6788a="" class="menu-item" data-nav-url='{{route('user.bank')}}'>
                                             <uni-view data-v-00e6788a="" class="menu-img d-c-c">
                                                 <uni-image data-v-00e6788a="">
                                                     <div style="background-image: url({{asset('icons8-account-94.png')}}; background-position: 0% 0%; background-size: 100% 100%; background-repeat: no-repeat;')}}"></div>
@@ -46,7 +46,7 @@
                                         </uni-view>
                                     </uni-view>
                                     <uni-view data-v-00e6788a="" class="tool-box">
-                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" onclick="window.location.href='{{route('user.balance.history')}}'">
+                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" data-nav-url='{{route('user.balance.history')}}'>
                                             <uni-text data-v-00e6788a="" class="flex-1"><span>Assets History</span>
                                             </uni-text>
                                             <uni-text data-v-00e6788a="" class="ui orange" style="text-align: right;">
@@ -55,35 +55,35 @@
                                                 <img class="right_chevron" src="{{asset('right.png')}}" alt="">
                                             </uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" onclick="window.location.href='{{route('user.change.password')}}'">
+                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" data-nav-url='{{route('user.change.password')}}'>
                                             <uni-text data-v-00e6788a="" class="flex-1"><span>Change Password</span>
                                             </uni-text>
                                             <uni-text data-v-0a75b799="" data-v-00e6788a="" style="color: rgb(255, 255, 255); font-size: 20px;">
                                                 <img class="right_chevron" src="{{asset('right.png')}}" alt="">
                                             </uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" onclick="window.location.href='{{route('user.service')}}'">
+                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" data-nav-url='{{route('user.service')}}'>
                                             <uni-text data-v-00e6788a="" class="flex-1"><span>Customer Service</span>
                                             </uni-text>
                                             <uni-text data-v-0a75b799="" data-v-00e6788a="" style="color: rgb(255, 255, 255); font-size: 20px;">
                                                 <img class="right_chevron" src="{{asset('right.png')}}" alt="">
                                             </uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" onclick="window.location.href='{{route('about')}}'">
+                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" data-nav-url='{{route('about')}}'>
                                             <uni-text data-v-00e6788a="" class="flex-1"><span>About Us</span>
                                             </uni-text>
                                             <uni-text data-v-0a75b799="" data-v-00e6788a="" style="color: rgb(255, 255, 255); font-size: 20px;">
                                                 <img class="right_chevron" src="{{asset('right.png')}}" alt="">
                                             </uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" onclick="window.location.href='{{route('user.download.apk')}}'">
+                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" data-nav-url='{{route('user.download.apk')}}'>
                                             <uni-text data-v-00e6788a="" class="flex-1"><span>Download App</span>
                                             </uni-text>
                                             <uni-text data-v-0a75b799="" data-v-00e6788a="" style="color: rgb(255, 255, 255); font-size: 20px;">
                                                 <img class="right_chevron" src="{{asset('right.png')}}" alt="">
                                             </uni-text>
                                         </uni-view>
-                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" onclick="window.location.href='{{route('logout')}}'">
+                                        <uni-view data-v-00e6788a="" class="tool-item d-b-c" data-nav-url='{{route('logout')}}'>
                                             <uni-text data-v-00e6788a="" class="flex-1">
                                                 <span>Quit</span></uni-text>
                                             <uni-text data-v-0a75b799="" data-v-00e6788a="" style="color: rgb(255, 255, 255); font-size: 20px;">

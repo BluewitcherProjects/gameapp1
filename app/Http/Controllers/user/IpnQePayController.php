@@ -307,4 +307,280 @@ class IpnQePayController extends Controller
             return response('error', 400);
         }
     }
+
+    /**
+     * HXPayment Deposit IPN
+     * Callback Parameters from HXPayment Documentation:
+     * - merchantLogin: Merchant Account
+     * - orderCode: Platform Order Number (e.g., C20210919210649238840)
+     * - merchantCode: Merchant Order Number (our order_id)
+     * - status: Order status (PENDING, SUCCESS, FAILED)
+     * - orderAmount: Order amount
+     * - paidAmount: Payment amount
+     * - sign: Signature
+     */
+    public function ipnHXPaymentDeposit(Request $request)
+    {
+        try {
+
+            $params = $request->all();
+            if (empty($params)) {
+                $params = $request->json()->all();
+            }
+
+            Log::info('HXPayment Deposit IPN Received', ['params' => $params]);
+
+            // Extract callback parameters
+            $sign = $params['sign'] ?? null;
+            $merchantLogin = $params['merchantLogin'] ?? null;
+            $orderCode = $params['orderCode'] ?? null; // Platform order number
+            $merchantCode = $params['merchantCode'] ?? null; // Our order_id
+            $status = $params['status'] ?? null; // PENDING, SUCCESS, FAILED
+            $orderAmount = $params['orderAmount'] ?? 0;
+            $paidAmount = $params['paidAmount'] ?? 0;
+
+            // Validate required parameters
+            if (!$merchantCode || !$status || !$sign) {
+                Log::error('HXPayment IPN: Missing required parameters');
+                return response()->json(['error' => 'Missing required parameters'], 400);
+            }
+
+            // Build signature string from all params except sign
+            $signParams = [];
+            foreach ($params as $key => $value) {
+                if ($key === 'sign') {
+                    continue;
+                }
+                if ($value !== '' && $value !== null) {
+                    $signParams[$key] = $value;
+                }
+            }
+            ksort($signParams);
+            $signStr = '';
+            foreach ($signParams as $key => $value) {
+                if ($signStr !== '') {
+                    $signStr .= '&';
+                }
+                $signStr .= $key . '=' . $value;
+            }
+
+            // Get merchant key for verification
+            $setting = PaymentMethod::where(['tag' => 'hxpayment', 'status' => 'active'])->first();
+            if (!$setting) {
+                Log::error('HXPayment IPN: Payment method not found');
+                return response()->json(['error' => 'Payment method not found'], 500);
+            }
+            $settingData = json_decode($setting->settings);
+            $merchant_key = $settingData->merchant_key->value;
+
+            // Verify signature
+            $expectedSign = md5($signStr . '&key=' . $merchant_key);
+            Log::info('HXPayment IPN Signature Check', [
+                'expected' => $expectedSign, 
+                'received' => $sign,
+                'signStr' => $signStr
+            ]);
+
+            if ($sign !== $expectedSign) {
+                Log::error('HXPayment IPN: Signature mismatch', [
+                    'expected' => $expectedSign,
+                    'received' => $sign
+                ]);
+                return response()->json(['error' => 'Invalid signature'], 403);
+            }
+
+            // Process payment based on status
+            if ($status == 'SUCCESS') {
+                // Find deposit by our merchant order code
+                $recharge = Deposit::where('order_id', $merchantCode)->first();
+                if (!$recharge) {
+                    Log::warning('HXPayment IPN: Deposit not found for order: ' . $merchantCode);
+                    return response()->json(['status' => 'success', 'message' => 'Order not found but acknowledged']);
+                }
+
+                // Check if already processed
+                if ($recharge->status === 'approved') {
+                    Log::info('HXPayment IPN: Deposit already processed: ' . $merchantCode);
+                    return response()->json(['status' => 'success', 'message' => 'Already processed']);
+                }
+
+                // Update deposit with paid amount
+                $updateData = self::updateDeposit($merchantCode, $paidAmount, $params);
+                if ($updateData instanceof \Exception) {
+                    Log::error('HXPayment IPN: Failed to update deposit: ' . $updateData->getMessage());
+                    throw new \Exception($updateData->getMessage());
+                }
+
+                Log::info('HXPayment IPN: Deposit updated successfully', [
+                    'order_id' => $merchantCode,
+                    'amount' => $paidAmount,
+                    'platform_order' => $orderCode
+                ]);
+
+            } elseif ($status == 'FAILED') {
+                // Find deposit and mark as rejected
+                $recharge = Deposit::where('order_id', $merchantCode)->first();
+                if ($recharge && $recharge->status == 'pending') {
+                    $recharge->status = 'rejected';
+                    $recharge->detail = $params;
+                    $recharge->save();
+                    Log::info('HXPayment IPN: Deposit marked as failed: ' . $merchantCode);
+                }
+            } elseif ($status == 'PENDING') {
+                Log::info('HXPayment IPN: Payment still pending: ' . $merchantCode);
+            }
+
+            return response()->json(['status' => 'success', 'message' => 'Callback processed']);
+
+        } catch (\Exception $th) {
+            Log::error('HXPayment Deposit IPN Error: ' . $th->getMessage(), [
+                'trace' => $th->getTraceAsString()
+            ]);
+            return response()->json(['error' => 'Internal error'], 500);
+        }
+    }
+
+    /**
+     * HXPayment Transfer/Withdrawal IPN
+     * Callback Parameters from HXPayment Documentation:
+     * - merchantLogin: Merchant Account
+     * - orderCode: Platform Order Number (e.g., P20210919210649238840)
+     * - merchantCode: Merchant Order Number (our trx)
+     * - status: Order status (PENDING, SUCCESS, FAILED)
+     * - utr: UTR number (if status is SUCCESS)
+     * - amount: Amount (if status is SUCCESS)
+     * - sign: Signature
+     */
+    public function ipnHXPaymentTransfer(Request $request)
+    {
+        try {
+
+            $params = $request->all();
+            if (empty($params)) {
+                $params = $request->json()->all();
+            }
+
+            Log::info('HXPayment Transfer IPN Received', ['params' => $params]);
+
+            // Extract callback parameters
+            $sign = $params['sign'] ?? null;
+            $merchantLogin = $params['merchantLogin'] ?? null;
+            $orderCode = $params['orderCode'] ?? null; // Platform order number
+            $merchantCode = $params['merchantCode'] ?? null; // Our trx
+            $status = $params['status'] ?? null; // PENDING, SUCCESS, FAILED
+            $utr = $params['utr'] ?? null; // Only present if SUCCESS
+            $amount = $params['amount'] ?? 0; // Only present if SUCCESS
+
+            // Validate required parameters
+            if (!$merchantCode || !$status || !$sign) {
+                Log::error('HXPayment Transfer IPN: Missing required parameters');
+                return response()->json(['error' => 'Missing required parameters'], 400);
+            }
+
+            // Build signature string from all params except sign
+            $signParams = [];
+            foreach ($params as $key => $value) {
+                if ($key === 'sign') {
+                    continue;
+                }
+                if ($value !== '' && $value !== null) {
+                    $signParams[$key] = $value;
+                }
+            }
+            ksort($signParams);
+            $signStr = '';
+            foreach ($signParams as $key => $value) {
+                if ($signStr !== '') {
+                    $signStr .= '&';
+                }
+                $signStr .= $key . '=' . $value;
+            }
+
+            // Get merchant key for verification
+            $setting = PaymentMethod::where(['tag' => 'hxpayment', 'status' => 'active'])->first();
+            if (!$setting) {
+                Log::error('HXPayment Transfer IPN: Payment method not found');
+                return response()->json(['error' => 'Payment method not found'], 500);
+            }
+            $settingData = json_decode($setting->settings);
+            $merchant_key = $settingData->merchant_key->value;
+
+            // Verify signature
+            $expectedSign = md5($signStr . '&key=' . $merchant_key);
+            Log::info('HXPayment Transfer IPN Signature Check', [
+                'expected' => $expectedSign, 
+                'received' => $sign,
+                'signStr' => $signStr
+            ]);
+
+            if ($sign !== $expectedSign) {
+                Log::error('HXPayment Transfer IPN: Signature mismatch', [
+                    'expected' => $expectedSign,
+                    'received' => $sign
+                ]);
+                return response()->json(['error' => 'Invalid signature'], 403);
+            }
+
+            // Find withdrawal
+            $payout = Withdrawal::where('trx', $merchantCode)->first();
+            if (!$payout) {
+                Log::warning('HXPayment Transfer IPN: Withdrawal not found for trx: ' . $merchantCode);
+                return response()->json(['status' => 'success', 'message' => 'Order not found but acknowledged']);
+            }
+
+            // Check if already processed
+            if (in_array($payout->status, ['approved', 'rejected'])) {
+                Log::info('HXPayment Transfer IPN: Withdrawal already processed: ' . $merchantCode);
+                return response()->json(['status' => 'success', 'message' => 'Already processed']);
+            }
+
+            // Process based on status
+            if ($status == 'SUCCESS') {
+                // Update payout as approved
+                $payout->status = 'approved';
+                $payout->detail = $params;
+                if ($utr) {
+                    $payout->transaction_id = $utr;
+                }
+                $payout->save();
+
+                Log::info('HXPayment Transfer IPN: Withdrawal approved', [
+                    'trx' => $merchantCode,
+                    'amount' => $amount,
+                    'utr' => $utr,
+                    'platform_order' => $orderCode
+                ]);
+
+            } elseif ($status == 'FAILED') {
+                // Refund to user balance
+                $user = User::find($payout->user_id);
+                if ($user) {
+                    $user->income = $user->income + $payout->amount;
+                    $user->save();
+                }
+
+                // Update payout as rejected
+                $payout->status = 'rejected';
+                $payout->detail = $params;
+                $payout->save();
+
+                Log::info('HXPayment Transfer IPN: Withdrawal failed, amount refunded', [
+                    'trx' => $merchantCode,
+                    'amount' => $payout->amount,
+                    'user_id' => $payout->user_id
+                ]);
+
+            } elseif ($status == 'PENDING') {
+                Log::info('HXPayment Transfer IPN: Withdrawal still pending: ' . $merchantCode);
+            }
+
+            return response()->json(['status' => 'success', 'message' => 'Callback processed']);
+
+        } catch (\Exception $th) {
+            Log::error('HXPayment Transfer IPN Error: ' . $th->getMessage(), [
+                'trace' => $th->getTraceAsString()
+            ]);
+            return response()->json(['error' => 'Internal error'], 500);
+        }
+    }
 }

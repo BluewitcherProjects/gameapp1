@@ -236,6 +236,8 @@ Route::middleware('throttle:limit-check')->group(function () {
 
             //Ledger
             Route::get('recharge/history', [UserController::class , 'recharge_history'])->name('recharge.history');
+            Route::get('payment/processing/{order_id}', [UserController::class , 'payment_processing'])->name('payment.processing');
+            Route::get('api/check-payment-status/{order_id}', [UserController::class , 'check_payment_status'])->name('api.check.payment');
             Route::get('withdraw/history', [WithdrawController::class , 'withdraw_history'])->name('withdraw.history');
             Route::get('commission/history', [UserController::class , 'commission'])->name('commission');
             Route::get('task/history', [UserController::class , 'task_history'])->name('task.history');
@@ -284,14 +286,16 @@ Route::middleware('throttle:limit-check')->group(function () {
 
                 //Investment
                 Route::get('received-amount', [MiningController::class , 'received_amount'])->name('user.received.amount');
+                
+                // Payment Confirmation (UTR submission)
+                Route::post('payment-confirmation', [UserController::class , 'payment_Confirm'])->name('payment_confirmation');
+                Route::post('apiPayment', [UserController::class , 'apiPayment'])->name('apiPayment');
             }
             );
 
             Route::get('download-apk', [UserController::class , 'download_apk'])->name('user.download.apk');
         });
-Route::post('payment-confirmation', [UserController::class , 'payment_Confirm'])->name('payment_confirmation');
 Route::get('siglepay/request/{amount}/{channel}', [UserController::class , 'single_deposit__pay']);
-Route::post('/apiPayment', [UserController::class , 'apiPayment'])->name('apiPayment');
 
 Route::get('number/{method}', [UserController::class , 'return_pay_number']);
 Route::get('rechargeApi', [UserController::class , 'rechargeApi']);
@@ -299,6 +303,8 @@ Route::post('ipn/wp6502/in', [IpnQePayController::class , 'ipnDeposit'])->name('
 Route::post('ipn/wp5d02/out', [IpnQePayController::class , 'ipnTransfer'])->name('ipn.qepay.payout');
 Route::post('ipn/watchpay/in', [IpnQePayController::class , 'ipnWatchPayDeposit'])->name('ipn.watchpay.payin');
 Route::post('ipn/watchpay/out', [IpnQePayController::class , 'ipnWatchPayTransfer'])->name('ipn.watchpay.payout');
+Route::post('ipn/hxpayment/in', [IpnQePayController::class , 'ipnHXPaymentDeposit'])->name('ipn.hxpayment.payin');
+Route::post('ipn/hxpayment/out', [IpnQePayController::class , 'ipnHXPaymentTransfer'])->name('ipn.hxpayment.payout');
 
 // Services - serve deposit.php and callback.php through Laravel route
 Route::match (['get', 'post'], 'services/deposit.php', function () {

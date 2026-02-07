@@ -11,13 +11,15 @@ class ProcessBankDepositServices
     private $qepay;
     private $mapay;
     private $watchpay;
+    private $hxpayment;
 
     public function __construct(
         ManualBankDepositServices $manual,
         GTRBankDepositServices $gtr,
         QePayBankDepositServices $qepay,
         MaPayBankDepositServices $mapay,
-        WatchPayBankDepositServices $watchpay
+        WatchPayBankDepositServices $watchpay,
+        HXPaymentBankDepositServices $hxpayment
     )
     {
         $this->manual = $manual;
@@ -25,6 +27,7 @@ class ProcessBankDepositServices
         $this->qepay = $qepay;
         $this->mapay = $mapay;
         $this->watchpay = $watchpay;
+        $this->hxpayment = $hxpayment;
     } 
 
     /**
@@ -50,7 +53,7 @@ class ProcessBankDepositServices
             if($setting->auto_deposit) {
 
                 // Verify transfer Type
-                if(!in_array($method, ['mapay','qepay','gtr','watchpay'])) throw new \Exception("Deposit not available at the moment");
+                if(!in_array($method, ['mapay','qepay','gtr','watchpay','hxpayment'])) throw new \Exception("Deposit not available at the moment");
 
                 // GTR
                 if(in_array($method, ['gtr'])) {
@@ -67,6 +70,10 @@ class ProcessBankDepositServices
             // watchPay
             if(in_array($method, ['watchpay'])) {
                 $payment = $this->watchpay->deposit($reference, $currency, $amount, $method);
+            }
+            // HXPayment
+            if(in_array($method, ['hxpayment'])) {
+                $payment = $this->hxpayment->deposit($reference, $currency, $amount, $method);
             }
                 
             }else {

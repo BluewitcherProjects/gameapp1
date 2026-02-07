@@ -99,13 +99,9 @@
                                         @foreach($parameters as $key => $param)
                                             <div class="col-sm-6">
                                                 <label for="global[{{ $key }}]">{{ __($param->title) }}</label>
-                                                <input type="text" class="form-control is-valid"
+                                                <input type="text" class="form-control"
                                                     name="global[{{ $key }}]" id="global[{{ $key }}]"
-                                                    placeholder="Enter" value="{{$param ? $param->value : old($param->value)}}">
-                                                <div class="valid-feedback">
-                                                    <i class="bx bx-radio-circle"></i>
-                                                    Note: This is filed is required
-                                                </div>
+                                                    placeholder="Enter {{ __($param->title) }}" value="{{$param ? $param->value : old($param->value)}}">
                                             </div>
                                         @endforeach
                                     @endif
