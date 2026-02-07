@@ -183,7 +183,7 @@
                                     </path>
                                 </svg>
                             </div>
-                            <h4 class="text-white font-semibold">WhatsApp Support</h4>
+                            <h4 class="text-white font-semibold">Support</h4>
                         </div>
                     </x-card>
                 </a>
