@@ -415,7 +415,7 @@
     @endif
 
     <script>
-     addEventListener(', () => {
+        document.addEvealpine:init', () => {
             window.openPurchaseModal = function (id) {
                 window.dispatchEvent(new CustomEvent('open-purchase-modal', { detail: { cid: id } }));
             }
