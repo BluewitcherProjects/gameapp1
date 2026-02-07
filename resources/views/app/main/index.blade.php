@@ -464,4 +464,9 @@
             items[0].classList.remove('opacity-0');
             setInterval(() => {
                 items[currentItem].classList.add('opacity-0');
-    
+                currentItem = (currentItem + 1) % items.length;
+                items[currentItem].classList.remove('opacity-0');
+            }, 3000);
+        }
+    </script>
+</x-app-layout>
