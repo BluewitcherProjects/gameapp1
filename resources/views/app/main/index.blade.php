@@ -57,7 +57,7 @@
                 <div class="relative mt-6 md:mt-8 mx-auto max-w-6xl">
                     <div
                         class="bg-primary-midnight/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl mx-2 sm:mx-0">
-                        <div class="grid grid-cols-5 gap-2 sm:gap-6">
+                        <div class="grid grid-cols-4 gap-2 sm:gap-6">
                             <a href="{{ route('user.deposit') }}" class="flex flex-col items-center group text-center">
                                 <div
                                     class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-accent-cyan/20 to-primary-teal/20 border border-accent-cyan/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-accent-cyan/50 transition-all duration-300">
@@ -91,16 +91,7 @@
                                 <span
                                     class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Channel</span>
                             </a>
-                            <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER"
-                                class="flex flex-col items-center group text-center">
-                                <div
-                                    class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-400/30 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-emerald-500/50 transition-all duration-300">
-                                    <img src="{{ asset('pic/icon/cs1.png') }}"
-                                        class="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md">
-                                </div>
-                                <span
-                                    class="mt-3 text-[10px] sm:text-xs font-semibold text-metallic-silver group-hover:text-white transition-colors">Support</span>
-                            </a>
+
                             <a href="https://t.me/TNL_LAB_WEBSITE_DEVELOPER"
                                 class="flex flex-col items-center group text-center">
                                 <div
