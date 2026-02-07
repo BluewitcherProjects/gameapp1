@@ -126,28 +126,28 @@
                 @foreach(\App\Models\Package::where('type','normal')->get() as $element)
                 <div x-show="activeTab === 'normal'" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-cyan/40 transition-all duration-300">
                     <div class="flex flex-row p-4 gap-4 min-h-[160px] sm:min-h-[200px]">
-                        <!-- Left: image fits card height -->
-                        <div class="flex-shrink-0 w-24 sm:w-32 h-full min-h-[120px] sm:min-h-[168px] rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden self-stretch">
-                            <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain">
+                        <!-- Left: wider image, border/background fits image -->
+                        <div class="flex-shrink-0 w-28 sm:w-36 md:w-40 h-full min-h-[120px] sm:min-h-[168px] rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center p-1 self-stretch overflow-hidden">
+                            <img src="{{ asset($element->photo) }}" alt="" class="max-w-full max-h-full w-auto h-auto object-contain">
                         </div>
-                        <!-- Right: name, horizontal stats, button -->
+                        <!-- Right: name, stats (responsive), button -->
                         <div class="flex-1 min-w-0 flex flex-col justify-between">
-                            <div>
+                            <div class="min-w-0">
                                 <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
                                 <span class="text-accent-cyan text-xs font-medium">{{ $element->validity }} Days</span>
                             </div>
-                            <div class="flex flex-row gap-2 mt-2">
-                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
-                                    <p class="text-gray-400 text-[10px] sm:text-xs">Invest</p>
-                                    <p class="text-white font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->price, 0) }}</p>
+                            <div class="grid grid-cols-3 gap-1.5 sm:gap-2 mt-2 min-w-0">
+                                <div class="min-w-0 rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 sm:px-2 sm:py-2 text-center overflow-hidden">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs truncate">Invest</p>
+                                    <p class="text-white font-bold text-[10px] sm:text-xs md:text-sm truncate" title="₹{{ number_format($element->price, 0) }}">₹{{ number_format($element->price, 0) }}</p>
                                 </div>
-                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
-                                    <p class="text-gray-400 text-[10px] sm:text-xs">Daily</p>
-                                    <p class="text-accent-cyan font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
+                                <div class="min-w-0 rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 sm:px-2 sm:py-2 text-center overflow-hidden">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs truncate">Daily</p>
+                                    <p class="text-accent-cyan font-bold text-[10px] sm:text-xs md:text-sm truncate" title="₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
                                 </div>
-                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
-                                    <p class="text-gray-400 text-[10px] sm:text-xs">Total</p>
-                                    <p class="text-accent-gold font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
+                                <div class="min-w-0 rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 sm:px-2 sm:py-2 text-center overflow-hidden">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs truncate">Total</p>
+                                    <p class="text-accent-gold font-bold text-[10px] sm:text-xs md:text-sm truncate" title="₹{{ number_format($element->commission_with_avg_amount, 0) }}">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
                                 </div>
                             </div>
                             @if($element->presale == 'yes')
@@ -163,26 +163,26 @@
                 @foreach(\App\Models\Package::where('type','welfare')->get() as $element)
                 <div x-show="activeTab === 'welfare'" style="display: none;" x-transition class="rounded-2xl border border-white/10 bg-[#0f172a]/90 overflow-hidden hover:border-accent-gold/40 transition-all duration-300">
                     <div class="flex flex-row p-4 gap-4 min-h-[160px] sm:min-h-[200px]">
-                        <div class="flex-shrink-0 w-24 sm:w-32 h-full min-h-[120px] sm:min-h-[168px] rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center overflow-hidden self-stretch">
-                            <img src="{{ asset($element->photo) }}" alt="" class="w-full h-full object-contain">
+                        <div class="flex-shrink-0 w-28 sm:w-36 md:w-40 h-full min-h-[120px] sm:min-h-[168px] rounded-xl bg-gray-800/80 border border-white/5 flex items-center justify-center p-1 self-stretch overflow-hidden">
+                            <img src="{{ asset($element->photo) }}" alt="" class="max-w-full max-h-full w-auto h-auto object-contain">
                         </div>
                         <div class="flex-1 min-w-0 flex flex-col justify-between">
-                            <div>
+                            <div class="min-w-0">
                                 <h3 class="text-white font-bold text-base sm:text-lg truncate">{{ $element->name }}</h3>
                                 <span class="text-accent-gold text-xs font-medium">{{ $element->validity }} Days</span>
                             </div>
-                            <div class="flex flex-row gap-2 mt-2">
-                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
-                                    <p class="text-gray-400 text-[10px] sm:text-xs">Invest</p>
-                                    <p class="text-white font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->price, 0) }}</p>
+                            <div class="grid grid-cols-3 gap-1.5 sm:gap-2 mt-2 min-w-0">
+                                <div class="min-w-0 rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 sm:px-2 sm:py-2 text-center overflow-hidden">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs truncate">Invest</p>
+                                    <p class="text-white font-bold text-[10px] sm:text-xs md:text-sm truncate" title="₹{{ number_format($element->price, 0) }}">₹{{ number_format($element->price, 0) }}</p>
                                 </div>
-                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
-                                    <p class="text-gray-400 text-[10px] sm:text-xs">Daily</p>
-                                    <p class="text-accent-gold font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
+                                <div class="min-w-0 rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 sm:px-2 sm:py-2 text-center overflow-hidden">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs truncate">Daily</p>
+                                    <p class="text-accent-gold font-bold text-[10px] sm:text-xs md:text-sm truncate" title="₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}">₹{{ number_format($element->commission_with_avg_amount / $element->validity, 2) }}</p>
                                 </div>
-                                <div class="flex-1 bg-white/5 rounded-lg px-2 py-1.5 text-center min-w-0">
-                                    <p class="text-gray-400 text-[10px] sm:text-xs">Total</p>
-                                    <p class="text-accent-gold font-bold text-xs sm:text-sm truncate">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
+                                <div class="min-w-0 rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 sm:px-2 sm:py-2 text-center overflow-hidden">
+                                    <p class="text-gray-400 text-[10px] sm:text-xs truncate">Total</p>
+                                    <p class="text-accent-gold font-bold text-[10px] sm:text-xs md:text-sm truncate" title="₹{{ number_format($element->commission_with_avg_amount, 0) }}">₹{{ number_format($element->commission_with_avg_amount, 0) }}</p>
                                 </div>
                             </div>
                             @if($element->presale == 'yes')
